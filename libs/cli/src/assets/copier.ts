@@ -1,0 +1,117 @@
+import * as fs from "fs";
+import * as path from "path";
+
+export interface AssetManifest {
+    cssFile: string | null;
+    jsFiles: string[];
+    preloadFiles: string[];
+}
+
+export function makeAssetManifest(raw: Partial<AssetManifest> = {}): AssetManifest {
+    return {
+        cssFile: raw.cssFile ?? null,
+        jsFiles: raw.jsFiles ?? [],
+        preloadFiles: raw.preloadFiles ?? [],
+    };
+}
+
+export async function copyAngularAssets(outRoot: string, cwd: string = process.cwd()): Promise<AssetManifest | null> {
+    const angularBuildDir = path.join(cwd, "dist", "apps", "web", "browser");
+
+    if (!fs.existsSync(angularBuildDir)) return null;
+
+    const assetsDir = path.join(outRoot, "assets");
+    fs.mkdirSync(assetsDir, { recursive: true });
+
+    const manifest: AssetManifest = makeAssetManifest();
+
+    const entries = fs.readdirSync(angularBuildDir, { withFileTypes: true });
+
+    const assetRegex = /\.(woff2?|ttf|eot|svg|png|jpg|jpeg|gif|webp)$/;
+
+    const copyToAssets = (src: string, name: string) => {
+        fs.copyFileSync(src, path.join(assetsDir, name));
+    };
+
+    const copyToRoot = (src: string, name: string) => {
+        fs.copyFileSync(src, path.join(outRoot, name));
+    };
+
+    const rules = [
+        {
+            match: (name: string) => /^styles(-[A-Z0-9]+)?\.css$/i.test(name),
+            run: (src: string) => {
+                copyToAssets(src, "styles.css");
+                manifest.cssFile = "assets/styles.css";
+            },
+        },
+        {
+            match: (name: string) => /^main(-[A-Z0-9]+)?\.js$/i.test(name),
+            run: (src: string, name: string) => {
+                copyToRoot(src, name);
+            },
+        },
+        {
+            match: (name: string) => name.startsWith("chunk-") && name.endsWith(".js"),
+            run: (src: string, name: string) => {
+                copyToRoot(src, name);
+                manifest.preloadFiles.push(name);
+            },
+        },
+    ];
+
+    for (const entry of entries) {
+        const name = entry.name;
+        const src = path.join(angularBuildDir, name);
+
+        if (entry.isDirectory()) {
+            copyDir(src, path.join(assetsDir, name));
+            continue;
+        }
+
+        const rule = rules.find(rule => rule.match(name));
+
+        if (rule) {
+            rule.run(src, name);
+            continue;
+        }
+
+        if (assetRegex.test(name)) {
+            copyToAssets(src, name);
+        }
+    }
+
+    return manifest;
+}
+
+export function copyDocsAssets(docsRoot: string, outRoot: string): void {
+    const src = path.join(docsRoot, "assets");
+    if (!fs.existsSync(src)) return;
+
+    const dest = path.join(outRoot, "assets");
+    copyDir(src, dest);
+}
+
+export function copyMermaidAsset(outRoot: string, cwd: string = process.cwd()): void {
+    const src = path.join(cwd, "node_modules", "mermaid", "dist", "mermaid.esm.min.mjs");
+    if (!fs.existsSync(src)) return;
+
+    const assetsDir = path.join(outRoot, "assets");
+    fs.mkdirSync(assetsDir, { recursive: true });
+    fs.copyFileSync(src, path.join(assetsDir, "mermaid.esm.min.mjs"));
+}
+
+function copyDir(src: string, dest: string): void {
+    fs.mkdirSync(dest, { recursive: true });
+
+    for (const entry of fs.readdirSync(src, { withFileTypes: true })) {
+        const srcPath = path.join(src, entry.name);
+        const destPath = path.join(dest, entry.name);
+
+        if (entry.isDirectory()) {
+            copyDir(srcPath, destPath);
+        } else {
+            fs.copyFileSync(srcPath, destPath);
+        }
+    }
+}
