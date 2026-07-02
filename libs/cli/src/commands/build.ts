@@ -143,12 +143,12 @@ async function resolveRenderer(warnings: string[]): Promise<Renderer> {
         }
     }
 
-    // try {
-    //     const { prerenderPage } = await import("../../web/src/engine/prerender");
-    //     return (ctx, assets) => prerenderPage(ctx, { assets });
-    // } catch {
-    //     // fall through to static
-    // }
+    try {
+        const { prerenderPage } = await import("../../../../apps/web/src/engine/prerender");
+        return (ctx, assets) => prerenderPage(ctx, { assets });
+    } catch {
+        // fall through to static
+    }
 
     warnings.push("Angular renderer not available — using static template fallback. Run `npx nx build web` to enable full Angular SSR rendering.");
     return ctx => Promise.resolve(staticRender(ctx));
@@ -180,25 +180,25 @@ function staticRender(ctx: PageContext): string {
 
     return `<!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>${escapeHtml(title)}</title>
-  ${page.frontMatter.description ? `<meta name="description" content="${escapeHtml(String(page.frontMatter.description))}" />` : ""}
-  <script>(function(){var t=localStorage.getItem('ai-docs-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(t==='dark'||(t===null&&d)){document.documentElement.classList.add('dark');}})()</script>
-</head>
-<body>
-  <div class="doc-layout">
-    <header class="doc-header"><a href="${config.base ?? "/"}" class="logo">${escapeHtml(config.title)}</a></header>
-    <aside class="doc-sidebar">${renderSidebar(sidebar, page.slug)}</aside>
-    <main class="doc-content">
-      ${renderBreadcrumb(breadcrumb)}
-      <article>${page.content}</article>
-      ${renderPrevNext(prev, next)}
-    </main>
-    <nav class="doc-toc">${renderToc(toc)}</nav>
-  </div>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>${escapeHtml(title)}</title>
+        ${page.frontMatter.description ? `<meta name="description" content="${escapeHtml(String(page.frontMatter.description))}" />` : ""}
+        <script>(function(){var t=localStorage.getItem('ai-docs-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(t==='dark'||(t===null&&d)){document.documentElement.classList.add('dark');}})()</script>
+    </head>
+    <body>
+        <div class="doc-layout">
+            <header class="doc-header"><a href="${config.base ?? "/"}" class="logo">${escapeHtml(config.title)}</a></header>
+            <aside class="doc-sidebar">${renderSidebar(sidebar, page.slug)}</aside>
+            <main class="doc-content">
+                ${renderBreadcrumb(breadcrumb)}
+                <article>${page.content}</article>
+                ${renderPrevNext(prev, next)}
+            </main>
+            <nav class="doc-toc">${renderToc(toc)}</nav>
+        </div>
+    </body>
 </html>`;
 }
 
