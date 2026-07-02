@@ -1,0 +1,10 @@
+<nav class="sticky top-14.25 h-[calc(100vh-57px)] overflow-y-auto px-2 py-4 border-r border-border bg-background scrollbar-thin [scrollbar-color:var(--border)_transparent]"
+    aria-label="Navegação">
+    @if (sidebar.length) {
+        <ul class="list-none p-0 m-0">
+            @for (item of sidebar; track item.href) {
+                <doc-sidebar-item [item]="item" />
+            }
+        </ul>
+    }
+</nav>

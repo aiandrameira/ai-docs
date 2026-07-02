@@ -1,0 +1,57 @@
+<header class="flex items-center gap-0 px-6 h-14.25 border-b border-border bg-background">
+    <ai-button variant="ghost"
+        size="xs"
+        class="flex md:hidden mr-2"
+        (click)="toggle()"
+        [attr.aria-label]="mobileMenuOpen() ? 'Fechar menu' : 'Abrir menu'"
+        [icon]="mobileMenuOpen() ? 'close' : 'menu-fold'" />
+
+    <a class="flex items-center gap-2 font-title text-base font-bold text-foreground hover:text-accent tracking-tight whitespace-nowrap mr-8 shrink-0"
+        [href]="config?.base ?? '/'">
+        @if (config?.logo) {
+            <img [src]="config!.logo" [alt]="config!.title" class="h-7 w-auto" />
+        } @else {
+            <span class="flex items-center justify-center w-6.5 h-6.5 rounded-md bg-primary text-primary-foreground shrink-0">
+                <ai-icon icon="file-text" size="sm" />
+            </span>
+            {{ config?.title ?? "AI-Docs" }}
+        }
+    </a>
+
+    @if (config?.nav?.length) {
+        <nav class="hidden md:flex items-center gap-1 flex-1" aria-label="Navegação principal">
+            @for (item of config!.nav; track item.href) {
+                <a class="text-sm font-medium text-muted-foreground px-2.5 py-1.5 rounded-md transition-colors whitespace-nowrap hover:bg-ghost hover:text-foreground"
+                    [href]="item.href"
+                    [target]="item.external ? '_blank' : '_self'"
+                    [rel]="item.external ? 'noopener noreferrer' : null">
+                    {{ item.label }}
+                    @if (item.external) {
+                        <ai-icon icon="external-link" size="xs" class="align-super ml-0.5" />
+                    }
+                </a>
+            }
+        </nav>
+    }
+
+    <div class="flex items-center gap-2 ml-auto">
+        @if (config?.features?.search !== false) {
+            <button class="flex items-center gap-2 px-3 py-1.5 border border-border rounded-md bg-muted text-muted-foreground cursor-pointer text-sm font-[inherit] transition-colors whitespace-nowrap hover:bg-ghost hover:border-ring"
+                (click)="openSearch()"
+                aria-label="Buscar">
+                <ai-icon icon="search" size="sm" />
+                <span>Buscar...</span>
+                <kbd class="hidden md:inline text-xs px-1.5 py-0.5 border border-border rounded bg-background font-code">⌘K</kbd>
+            </button>
+        }
+
+        @if (config?.features?.darkMode !== false) {
+            <ai-button variant="ghost"
+                size="xs"
+                (click)="toggleDark()"
+                [title]="isDark() ? 'Modo claro' : 'Modo escuro'"
+                [attr.aria-label]="isDark() ? 'Modo claro' : 'Modo escuro'"
+                [icon]="isDark() ? 'sun' : 'moon'" />
+        }
+    </div>
+</header>

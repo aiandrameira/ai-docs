@@ -1,0 +1,14 @@
+<article class="doc-article" [innerHTML]="safeHtml"></article>
+
+@if (editHref) {
+    <a
+        ai-button
+        variant="link"
+        size="sm"
+        icon="edit"
+        [href]="editHref"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="px-0! mt-10 pt-6 border-t border-border text-muted-foreground"
+    >Editar esta página no GitHub</a>
+}

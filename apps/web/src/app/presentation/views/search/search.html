@@ -1,0 +1,41 @@
+@if (open()) {
+    <div
+        class="fixed inset-0 z-100 flex items-start justify-center pt-[10vh] bg-black/40 animate-in fade-in duration-100"
+        (click)="close($event)"
+        (keydown)="onKeydown($event)"
+    >
+        <div
+            #dialog
+            class="w-[min(640px,calc(100vw-2rem))] bg-background border border-border rounded-xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.3)] animate-in fade-in slide-in-from-top-2 duration-150"
+            role="dialog"
+            aria-label="Busca"
+        >
+            <ai-command #cmd="aiCommand" (selectedCommand)="onSelect($event)">
+                <ai-command-input placeholder="Buscar na documentação..." />
+
+                <ai-command-list class="max-h-[60vh] overflow-y-auto p-2">
+                    @if (query().length >= 2 && results().length === 0) {
+                        <ai-command-empty
+                            title="Nenhum resultado"
+                            description="Tente outra palavra-chave."
+                        />
+                    }
+                    @for (item of results(); track item.slug) {
+                        <ai-command-item
+                            [value]="item.slug"
+                            [label]="item.title"
+                            [shortcut]="item.section"
+                            [command]="item.description + ' ' + item.content"
+                        />
+                    }
+                </ai-command-list>
+            </ai-command>
+
+            <div class="flex gap-4 px-4 py-2 border-t border-border text-xs text-muted-foreground">
+                <span class="flex items-center gap-1"><kbd class="text-[0.7rem] px-1.5 py-0.5 border border-border rounded text-muted-foreground bg-muted font-code">↑↓</kbd> navegar</span>
+                <span class="flex items-center gap-1"><kbd class="text-[0.7rem] px-1.5 py-0.5 border border-border rounded text-muted-foreground bg-muted font-code">↵</kbd> abrir</span>
+                <span class="flex items-center gap-1"><kbd class="text-[0.7rem] px-1.5 py-0.5 border border-border rounded text-muted-foreground bg-muted font-code">Esc</kbd> fechar</span>
+            </div>
+        </div>
+    </div>
+}

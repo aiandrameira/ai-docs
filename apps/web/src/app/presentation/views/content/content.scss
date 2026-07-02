@@ -1,0 +1,328 @@
+@use "main";
+
+doc-content {
+    @apply contents;
+}
+
+.doc-article {
+    @apply min-w-0;
+
+    // ── Typography ────────────────────────────────────────
+    h1, h2, h3, h4 {
+        @apply font-title text-primary;
+    }
+    h2, h3, h4 {
+        @apply font-semibold scroll-mt-18;
+    }
+    h1 {
+        @apply text-3xl font-bold tracking-tight mb-2;
+    }
+    h2 {
+        @apply text-xl mt-8 mb-3;
+        a {
+            @apply no-underline text-accent hover:text-accent text-xl mr-1.5 font-normal;
+        }
+    }
+    h3 {
+        @apply text-lg mt-6 mb-2;
+        a {
+            @apply no-underline text-accent hover:text-accent text-lg mr-1.5 font-normal;
+        }
+    }
+    h4 {
+        @apply text-base mt-4 mb-1;
+        a {
+            @apply no-underline text-accent hover:text-accent text-base mr-1.5 font-normal;
+        }
+    }
+
+    p {
+        @apply text-sm text-muted-foreground mb-4 leading-relaxed text-justify;
+    }
+    em,
+    p em {
+        @apply italic text-sm text-muted-foreground font-semibold;
+    }
+
+    a {
+        @apply text-primary font-semibold font-text text-sm underline-offset-3 hover:text-accent;
+    }
+
+    ul, ol {
+        @apply pl-6 mb-4 list-disc list-inside;
+
+        li {
+            @apply mb-1.5 text-sm font-medium text-muted-foreground;
+        }
+    }
+
+    blockquote {
+        @apply border-l-4 border-l-primary rounded-md px-4 py-2 my-4 text-primary bg-ghost italic;
+        p {
+            @apply m-0 text-primary text-sm font-semibold italic;
+        }
+    }
+
+    code {
+        @apply font-code font-medium text-xs rounded p-0 bg-ghost text-ghost-foreground py-0.5 px-1 tab-4;
+    }
+
+    pre {
+        @apply font-code font-medium text-[13px] rounded-lg p-4 overflow-x-auto mb-4 bg-muted border border-border tab-4;
+        code {
+            @apply font-code font-medium text-[13px] p-0 bg-transparent tab-4;
+        }
+    }
+
+    // ── Shiki dual-theme ──────────────────────────────────
+    .shiki,
+    .shiki span {
+        @apply text-(--shiki-light) bg-(--shiki-light-bg) dark:text-(--shiki-dark) dark:bg-(--shiki-dark-bg);
+    }
+
+    // ── Code blocks ───────────────────────────────────────
+    .code-block {
+        @apply relative mb-5;
+
+        pre {
+            @apply mb-0;
+        }
+
+        .copy-code-btn {
+            @apply absolute top-2.5 right-2.5 flex items-center gap-1 rounded-md
+                border border-border bg-background text-muted-foreground
+                cursor-pointer font-text text-xs px-2 py-1
+                transition-colors duration-200
+                hover:bg-ghost hover:text-ghost-foreground;
+
+            &.copied {
+                @apply text-success;
+            }
+        }
+    }
+
+    // ── Tables ────────────────────────────────────────────
+    table {
+        @apply w-full border-collapse mb-5 text-sm;
+    }
+    th {
+        @apply px-3 py-2 bg-muted font-semibold text-left border-b border-border text-foreground;
+    }
+    td {
+        @apply px-3 py-2 border-b border-border text-muted-foreground;
+    }
+    tr:last-child td {
+        @apply border-b-0;
+    }
+
+    img {
+        @apply max-w-full rounded-lg;
+    }
+    hr {
+        @apply border-0 border-t border-border my-8;
+    }
+
+    // ── Page meta ─────────────────────────────────────────
+    .page-meta {
+        @apply flex items-center gap-4 text-xs text-muted-foreground mb-8 pb-6 border-b border-border;
+
+        i {
+            @apply text-xs;
+        }
+    }
+
+    .badge {
+        @apply inline-flex items-center gap-1 bg-default text-default-foreground text-xs font-semibold px-2 py-0.5 rounded-full font-text;
+    }
+
+    // ── Callouts ──────────────────────────────────────────
+    .callout {
+        @apply flex items-center gap-2 border-l-4 border border-r-0 border-t-0 border-b-0 rounded-lg px-4 py-3 mb-4;
+    }
+    .callout-icon {
+        @apply text-base shrink-0 font-normal;
+    }
+    .callout-body {
+        strong {
+            @apply block font-text text-sm font-semibold mb-1;
+        }
+        p {
+            @apply m-0 text-xs;
+        }
+    }
+
+    .callout-primary {
+        @apply bg-primary/6 border-l-primary;
+        .callout-icon,
+        .callout-body strong,
+        .callout-body p {
+            @apply text-primary;
+        }
+    }
+
+    .callout-info {
+        @apply bg-info/8 border-l-info;
+        .callout-icon,
+        .callout-body strong,
+        .callout-body p {
+            @apply text-info;
+        }
+    }
+
+    .callout-success {
+        @apply bg-success/8 border-l-success;
+        .callout-icon,
+        .callout-body strong,
+        .callout-body p {
+            @apply text-success;
+        }
+    }
+
+    .callout-warning {
+        @apply bg-warning/8 border-l-warning;
+        .callout-icon,
+        .callout-body strong,
+        .callout-body p {
+            @apply text-warning;
+        }
+    }
+
+    .callout-destructive {
+        @apply bg-destructive/8 border-l-destructive;
+        .callout-icon,
+        .callout-body strong,
+        .callout-body p {
+            @apply text-destructive;
+        }
+    }
+
+    // ── HTTP method badges ────────────────────────────────
+    .http-method {
+        @apply inline-flex items-center font-code text-xs font-bold tracking-wider px-2 py-0.5 rounded min-w-13 justify-center shrink-0;
+    }
+
+    .http-post {
+        @apply bg-success/12 text-success border border-success/30;
+    }
+
+    .http-put,
+    .http-patch {
+        @apply bg-warning/12 text-warning border border-warning/30;
+    }
+
+    .http-get {
+        @apply bg-violet/12 text-violet border border-violet/30;
+    }
+
+    .http-delete {
+        @apply bg-destructive/12 text-destructive border border-destructive/30;
+    }
+
+    // ── Endpoint list ─────────────────────────────────────
+    .endpoint-list {
+        @apply flex flex-col gap-0.5 mb-5;
+    }
+
+    .endpoint-row {
+        @apply flex items-center gap-3 px-3.5 py-2.5 border border-border rounded-md cursor-pointer transition-colors no-underline text-foreground;
+        &:hover,
+        &.active {
+            @apply bg-ghost border-ring;
+        }
+    }
+
+    .endpoint-path {
+        @apply font-code text-sm text-foreground flex-1;
+        .path-param {
+            @apply text-accent;
+        }
+    }
+
+    .endpoint-desc {
+        @apply text-sm text-muted-foreground;
+    }
+
+    .endpoint-detail {
+        @apply border border-border rounded-lg overflow-hidden mb-5;
+
+        &-header {
+            @apply flex items-center gap-3 px-4.5 py-3.5 bg-muted border-b border-border;
+            h4 {
+                @apply font-code text-sm font-semibold text-foreground;
+            }
+            p {
+                @apply text-sm text-muted-foreground m-0;
+            }
+        }
+
+        &-body {
+            @apply px-4.5 py-4;
+        }
+    }
+
+    // ── Param tables ──────────────────────────────────────
+    .param-section-title {
+        @apply font-title text-xs font-bold uppercase tracking-widest text-muted-foreground mb-2 mt-4;
+        &:first-child {
+            @apply mt-0;
+        }
+    }
+
+    .param-table {
+        @apply w-full border-collapse text-sm mb-0;
+        th {
+            @apply text-left px-2.5 py-1.5 bg-muted border-b border-border text-xs font-title font-bold uppercase 
+            tracking-widest text-muted-foreground;
+        }
+        td {
+            @apply px-2.5 py-2 border-b border-border align-top;
+        }
+        tr:last-child td {
+            @apply border-b-0;
+        }
+    }
+
+    .param-required {
+        @apply text-[10px] font-bold text-destructive font-title uppercase tracking-widest;
+    }
+    .param-optional {
+        @apply text-[10px] font-bold text-muted-foreground font-title uppercase tracking-widest;
+    }
+
+    // ── Response rows ─────────────────────────────────────
+    .response-row {
+        @apply flex items-start gap-3 py-2 border-b border-border text-sm text-muted-foreground;
+        &:last-child {
+            @apply border-b-0;
+        }
+    }
+    .status-code {
+        @apply font-code text-xs font-bold px-2 py-0.5 rounded shrink-0;
+    }
+    .status-2xx {
+        @apply bg-success/12 text-success border border-success/30 dark:bg-success/18 dark:border-success/40;
+    }
+    .status-4xx {
+        @apply bg-warning/12 text-warning border border-warning/30 dark:bg-warning/18 dark:border-warning/40;
+    }
+    .status-5xx {
+        @apply bg-destructive/12 text-destructive border border-destructive/30 dark:bg-destructive/18 dark:border-destructive/40;
+    }
+
+    // ── Mermaid ───────────────────────────────────────────
+    .mermaid-block {
+        @apply bg-muted border border-border rounded-lg p-6 mb-5 overflow-x-auto;
+    }
+    .mermaid-source {
+        @apply hidden whitespace-pre-wrap font-code text-sm;
+    }
+    .mermaid-render {
+        @apply flex justify-center;
+        svg {
+            @apply max-w-full;
+        }
+    }
+    .mermaid-loading {
+        @apply text-sm text-muted-foreground;
+    }
+}

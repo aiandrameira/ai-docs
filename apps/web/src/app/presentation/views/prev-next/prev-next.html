@@ -1,0 +1,29 @@
+@if (prev || next) {
+    <nav class="grid grid-cols-2 gap-3 mt-14 pt-6 border-t border-border" aria-label="Navegação entre páginas">
+        @if (prev) {
+            <a
+                class="group flex flex-col gap-1 px-4 py-2 border border-border rounded-lg no-underline text-foreground cursor-pointer transition-colors hover:border-ring"
+                [href]="prev.href"
+            >
+                <span class="flex items-center gap-1.5 text-sm font-semibold tracking-wide text-muted-foreground transition-colors group-hover:text-primary">
+                    <ai-icon icon="arrow-left" size="xs" /> {{ prev.title }}
+                </span>
+            </a>
+        } @else {
+            <span class="block"></span>
+        }
+
+        @if (next) {
+            <a
+                class="group flex flex-col gap-1 px-4 py-2 border border-border rounded-lg no-underline text-foreground cursor-pointer transition-colors text-right items-end hover:border-ring"
+                [href]="next.href"
+            >
+                <span class="flex items-center gap-1.5 text-sm font-semibold tracking-wide text-muted-foreground transition-colors group-hover:text-primary">
+                    {{ next.title }} <ai-icon icon="arrow-right" size="xs" />
+                </span>
+            </a>
+        } @else {
+            <span class="block"></span>
+        }
+    </nav>
+}

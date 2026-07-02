@@ -1,0 +1,17 @@
+@use "tailwindcss" as tailwind;
+@use "./app.css";
+
+@import "remixicon/fonts/remixicon.css";
+
+@layer base {
+    html,
+    body {
+        @apply h-full;
+    }
+    ::-webkit-scrollbar {
+        @apply w-[0.4rem] h-[0.4rem] bg-ghost/80 rounded-sm;
+        &-thumb {
+            @apply bg-ghost rounded-sm;
+        }
+    }
+}

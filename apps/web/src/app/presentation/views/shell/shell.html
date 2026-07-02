@@ -1,0 +1,40 @@
+<doc-search />
+<div class="grid min-h-screen bg-background text-foreground grid-rows-[57px_1fr]
+        grid-cols-1 [grid-template-areas:'header'_'content']
+        md:grid-cols-[260px_1fr] md:[grid-template-areas:'header_header'_'sidebar_content']
+        xl:grid-cols-[260px_1fr_224px] xl:[grid-template-areas:'header_header_header'_'sidebar_content_toc']">
+    <div class="sticky top-0 z-40 [grid-area:header]">
+        <doc-header />
+    </div>
+    <aside class="hidden md:block [grid-area:sidebar]">
+        <doc-sidebar />
+    </aside>
+    <main class="min-w-0 max-w-195 px-12 pt-10 pb-20 [grid-area:content]">
+        <doc-breadcrumb />
+        <doc-content />
+        <doc-prev-next />
+    </main>
+    <nav class="hidden xl:block [grid-area:toc]">
+        <doc-toc />
+    </nav>
+</div>
+
+@if (layout.mobileMenuOpen()) {
+    <div class="md:hidden fixed inset-0 z-80 bg-black/45" (click)="layout.close()">
+        <div class="absolute top-0 left-0 bottom-0 w-70 bg-background border-r border-border overflow-y-auto shadow-[4px_0_24px_rgba(0,0,0,0.12)] flex flex-col"
+            (click)="$event.stopPropagation()">
+            <div class="flex items-center justify-between px-4 h-14.25 border-b border-border shrink-0">
+                <a class="flex items-center gap-2 font-title text-[1.0625rem] font-bold text-foreground no-underline" href="/">
+                    <span class="flex items-center justify-center w-6.5 h-6.5 rounded-md bg-primary text-primary-foreground">
+                        <ai-icon icon="file-text" size="sm" />
+                    </span>
+                    AI-Docs
+                </a>
+                <button ai-button variant="ghost" size="xs" (click)="layout.close()" aria-label="Fechar menu" icon="close"></button>
+            </div>
+            <div class="flex-1 overflow-y-auto" (click)="layout.close()">
+                <doc-sidebar />
+            </div>
+        </div>
+    </div>
+}

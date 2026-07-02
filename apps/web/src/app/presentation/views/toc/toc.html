@@ -1,0 +1,24 @@
+@if (toc.length) {
+    <nav class="sticky top-14.25 h-[calc(100vh-57px)] overflow-y-auto py-10 pr-5 border-l border-border bg-background scrollbar-thin [scrollbar-color:var(--border)_transparent]"
+        aria-label="Nesta página">
+        <p class="font-title text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-3 px-2">Nesta página</p>
+        <ul class="list-none p-0 m-0 flex flex-col gap-px">
+            <ng-container *ngTemplateOutlet="tocItems; context: { items: toc, level: 2 }" />
+        </ul>
+    </nav>
+}
+
+<ng-template #tocItems let-items="items" let-level="level">
+    @for (item of items; track item.id) {
+        <li>
+            <a [href]="`#${item.id}`" [class]="tocLinkClass(item.id, level)">
+                {{ item.text }}
+            </a>
+            @if (item.children?.length) {
+                <ul>
+                    <ng-container *ngTemplateOutlet="tocItems; context: { items: item.children, level: level + 1 }" />
+                </ul>
+            }
+        </li>
+    }
+</ng-template>
