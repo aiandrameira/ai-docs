@@ -1,0 +1,58 @@
+name: 🕵🏽‍♀️ Check project
+run-name: |
+    🚀 Checking CLI of ${{ github.head_ref || github.ref_name }}
+    ${{ github.event.head_commit.message || github.event.pull_request.title }}
+
+on:
+    pull_request:
+        branches: [main]
+
+jobs:
+    checking_code:
+        name: 🎉 Construir e verificar
+        runs-on: ubuntu-latest
+        if: ${{ github.actor != 'dependabot[bot]' }}
+        permissions:
+            contents: write
+            packages: read
+
+        steps:
+            - name: 🔄 Checkout code
+              uses: actions/checkout@v4
+              with:
+                  ref: ${{ github.head_ref }}
+                  fetch-depth: 0
+                  token: ${{ secrets.GITHUB_TOKEN }}
+
+            - name: ⚙️ Setup node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 24.x
+                  registry-url: "https://npm.pkg.github.com"
+                  scope: "@aiandrameira"
+                  always-auth: true
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+
+            - name: ⚒️ Install dependencies
+              run: npm install
+              env:
+                  NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+
+            - name: 📦 Build project and lib
+              run: |
+                  npm run build
+                  npm run build:ui
+              continue-on-error: false
+
+            - name: 🧹 Linting
+              run: npm run lint
+              continue-on-error: false
+
+            - name: ✅ All checks passed
+              if: success()
+              run: echo "✅ Todos os checks passaram com sucesso!"
+
+            - name: ❌ Some checks failed
+              if: failure()
+              run: echo "❌ Alguns checks falharam. Verifique os logs acima."

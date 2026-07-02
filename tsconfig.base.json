@@ -1,0 +1,54 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "rootDir": ".",
+        "sourceMap": true,
+        "declaration": false,
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "importHelpers": true,
+        "target": "es2015",
+        "module": "esnext",
+        "lib": [
+            "es2020",
+            "dom"
+        ],
+        "skipLibCheck": true,
+        "skipDefaultLibCheck": true,
+        "baseUrl": ".",
+        "paths": {
+            "@public/*": [
+                "apps/web/public/*"
+            ],
+            "@env/*": [
+                "apps/web/src/environments/*"
+            ],
+            "@core/*": [
+                "apps/web/src/app/core/*"
+            ],
+            "@domain/*": [
+                "apps/web/src/app/domain/*"
+            ],
+            "@infra/*": [
+                "apps/web/src/app/infra/*"
+            ],
+            "@views/*": [
+                "apps/web/src/app/presentation/*"
+            ],
+            "@package": [
+                "package.json"
+            ],
+            "@libs/core": [
+                "libs/core/src/index.ts"
+            ],
+            "@aiandrameira/cli": [
+                "libs/cli/src/index.ts"
+            ]
+        }
+    },
+    "exclude": [
+        "node_modules",
+        "tmp"
+    ]
+}
