@@ -5,11 +5,11 @@
     "scripts": {
         "dev": "npx nx run web:serve --configuration=local --port=4555",
         "build": "npx nx run web:build",
-        "lint": "eslint . --fix",
-        "prepare": "husky",
         "docs:build": "node scripts/run-cli.mjs build",
         "docs:dev": "node scripts/run-cli.mjs dev --port=4555",
-        "docs:preview": "npx nx build web --configuration=development --skip-nx-cache && node scripts/run-cli.mjs build"
+        "pub": "npx nx run cli:build && npm publish ./dist/libs/cli",
+        "lint": "eslint . --fix",
+        "prepare": "husky"
     },
     "private": true,
     "dependencies": {
