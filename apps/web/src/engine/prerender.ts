@@ -1,5 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
+import { fileURLToPath } from "url";
 
 import { bootstrapApplication, BootstrapContext } from "@angular/platform-browser";
 import { renderApplication } from "@angular/platform-server";
@@ -33,9 +34,11 @@ export interface PrerenderOptions {
 }
 
 function buildBaseTemplate(): string {
-    const serverIndexPath = path.join(process.cwd(), "dist", "apps", "web", "server", "index.server.html");
+    const moduleDir = path.dirname(fileURLToPath(import.meta.url));
+    const serverIndexPaths = [path.join(process.cwd(), "dist", "apps", "web", "server", "index.server.html"), path.join(moduleDir, "index.server.html")];
+    const serverIndexPath = serverIndexPaths.find(p => fs.existsSync(p));
 
-    if (fs.existsSync(serverIndexPath)) {
+    if (serverIndexPath) {
         let html = fs.readFileSync(serverIndexPath, "utf-8");
 
         html = html.replace(/<title>[^<]*<\/title>/i, "");
