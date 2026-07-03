@@ -6,17 +6,7 @@
         [attr.aria-label]="mobileMenuOpen() ? 'Fechar menu' : 'Abrir menu'"
         [icon]="mobileMenuOpen() ? 'close' : 'menu-fold'" />
 
-    <a class="flex items-center gap-2 font-title text-base font-bold text-foreground hover:text-accent tracking-tight whitespace-nowrap mr-8 shrink-0"
-        [href]="config?.base ?? '/'">
-        @if (config?.logo) {
-            <img [src]="config!.logo" [alt]="config!.title" class="h-7 w-auto" />
-        } @else {
-            <span class="flex items-center justify-center w-6.5 h-6.5 rounded-md bg-primary text-primary-foreground shrink-0">
-                <ai-icon icon="file-text" size="sm" />
-            </span>
-            {{ config?.title ?? "AI-Docs" }}
-        }
-    </a>
+    <doc-logo class="mr-8" />
 
     @if (config?.nav?.length) {
         <nav class="hidden md:flex items-center gap-1 flex-1" aria-label="Navegação principal">
@@ -41,7 +31,7 @@
                 aria-label="Buscar">
                 <ai-icon icon="search" size="sm" />
                 <span>Buscar...</span>
-                <kbd class="hidden md:inline text-xs px-1.5 py-0.5 border border-border rounded bg-background font-code">⌘K</kbd>
+                <kbd class="hidden md:inline text-[10px] px-1.5 py-0.5 border border-border rounded bg-background font-code">⌘K</kbd>
             </button>
         }
 

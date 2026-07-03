@@ -4,9 +4,11 @@ import { ChangeDetectionStrategy, Component, computed, inject, PLATFORM_ID } fro
 import { LayoutService } from "@infra/services";
 import { DOC_PAGE_CONTEXT, DOC_SITE_CONFIG } from "@infra/tokens";
 
+import { DocLogo } from "../logo/logo";
+
 @Component({
     selector: "doc-header",
-    imports: [AiButton, AiIcon],
+    imports: [AiButton, AiIcon, DocLogo],
     templateUrl: "./header.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
