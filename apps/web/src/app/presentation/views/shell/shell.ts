@@ -1,4 +1,3 @@
-import { AiButton, AiIcon } from "@aiandralves/ai-ui";
 import { DOCUMENT } from "@angular/common";
 import { afterNextRender, ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { LayoutService } from "@infra/services";
@@ -6,6 +5,7 @@ import { LayoutService } from "@infra/services";
 import { DocBreadcrumb } from "../breadcrumb/breadcrumb";
 import { DocContent } from "../content/content";
 import { DocHeader } from "../header/header";
+import { DocMobileMenu } from "../mobile-menu/mobile-menu";
 import { DocPrevNext } from "../prev-next/prev-next";
 import { DocSearch } from "../search/search";
 import { DocSidebar } from "../sidebar/sidebar";
@@ -13,7 +13,7 @@ import { DocToc } from "../toc/toc";
 
 @Component({
     selector: "doc-shell",
-    imports: [DocHeader, DocSidebar, DocContent, DocToc, DocBreadcrumb, DocPrevNext, DocSearch, AiButton, AiIcon],
+    imports: [DocHeader, DocSidebar, DocMobileMenu, DocContent, DocToc, DocBreadcrumb, DocPrevNext, DocSearch],
     templateUrl: "./shell.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
