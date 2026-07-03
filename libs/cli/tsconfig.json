@@ -12,7 +12,7 @@
         "noFallthroughCasesInSwitch": true,
         "noPropertyAccessFromIndexSignature": true,
         "paths": {
-            "@aiandrameira/core": ["dist/libs/core"]
+            "@aiandrameira/core": ["libs/core/src/index.ts"]
         }
     },
     "files": [],

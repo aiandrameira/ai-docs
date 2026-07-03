@@ -1,12 +1,12 @@
 import * as fs from "fs";
 import * as path from "path";
 
-import { buildBreadcrumb, buildSearchIndex, buildSidebar, extractToc, parseFileAsync, resolvePrevNext } from "../../../core";
+import { buildBreadcrumb, buildSearchIndex, buildSidebar, extractToc, parseFileAsync, resolvePrevNext } from "@aiandrameira/core";
 import { copyAngularAssets, copyDocsAssets, copyMermaidAsset } from "../assets/copier";
 import { logger } from "../config/logger";
 import { spinner } from "../config/spinner";
 
-import type { DocPage, PageContext, SiteConfig } from "../../../core";
+import type { DocPage, PageContext, SiteConfig } from "@aiandrameira/core";
 import type { AssetManifest } from "../assets/copier";
 
 export async function runBuild(config: SiteConfig, opts: { quiet?: boolean } = {}): Promise<void> {
@@ -144,8 +144,9 @@ async function resolveRenderer(warnings: string[]): Promise<Renderer> {
     }
 
     try {
-        const { prerenderPage } = await import("../../../../apps/web/src/engine/prerender");
-        return (ctx, assets) => prerenderPage(ctx, { assets });
+        const prerenderSource = path.join(process.cwd(), "apps", "web", "src", "engine", "prerender");
+        const mod = (await import(prerenderSource)) as { prerenderPage: Renderer };
+        return (ctx, assets) => mod.prerenderPage(ctx, { assets } as never);
     } catch {
         // fall through to static
     }

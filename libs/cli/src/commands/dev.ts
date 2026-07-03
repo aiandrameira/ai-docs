@@ -7,7 +7,7 @@ import { logger } from "../config/logger";
 import { spinner } from "../config/spinner";
 import { runBuild } from "./build";
 
-import type { SiteConfig } from "../../../core";
+import type { SiteConfig } from "@aiandrameira/core";
 
 const LIVE_RELOAD_SCRIPT = `<script>
 (function(){
