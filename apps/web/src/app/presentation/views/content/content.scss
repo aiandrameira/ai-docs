@@ -8,10 +8,15 @@ doc-content {
     @apply min-w-0;
 
     // ── Typography ────────────────────────────────────────
-    h1, h2, h3, h4 {
+    h1,
+    h2,
+    h3,
+    h4 {
         @apply font-title text-primary;
     }
-    h2, h3, h4 {
+    h2,
+    h3,
+    h4 {
         @apply font-semibold scroll-mt-18;
     }
     h1 {
@@ -48,7 +53,8 @@ doc-content {
         @apply text-primary font-semibold font-text text-sm underline-offset-3 hover:text-accent;
     }
 
-    ul, ol {
+    ul,
+    ol {
         @apply pl-6 mb-4 list-disc list-inside;
 
         li {
@@ -58,8 +64,14 @@ doc-content {
 
     blockquote {
         @apply border-l-4 border-l-primary rounded-md px-4 py-2 my-4 text-primary bg-ghost italic;
-        p {
-            @apply m-0 text-primary text-sm font-semibold italic;
+        p,
+        p strong,
+        strong {
+            @apply m-0 text-primary text-sm font-semibold font-text italic;
+        }
+        p strong,
+        strong {
+            @apply font-bold;
         }
     }
 

@@ -1,10 +1,14 @@
 <a class="flex items-center gap-2 font-title text-base font-bold text-foreground hover:text-accent tracking-tight whitespace-nowrap shrink-0" [href]="config?.base ?? '/'">
-    @if (config?.logo) {
-        <img [src]="config!.logo" [alt]="config!.title" class="h-7 w-auto dark:invert" />
+    @let logo = config?.logo;
+    @let title = config?.title ?? "Ai Docs";
+    @if (logo) {
+        <img [src]="logo" [alt]="title" class="h-7 w-auto dark:invert" />
     } @else {
         <span class="flex items-center justify-center w-6.5 h-6.5 rounded-md bg-primary text-primary-foreground shrink-0">
             <ai-icon icon="file-text" size="sm" />
         </span>
-        {{ config?.title ?? "AI-Docs" }}
+        <span class="text-base font-bold font-title text-primary">
+            {{ title }}
+        </span>
     }
 </a>
