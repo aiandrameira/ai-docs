@@ -25,25 +25,6 @@ const DARK_MODE_SCRIPT = `<script>
 </script>
 <style>html.no-flash body{visibility:hidden;}</style>`;
 
-const CLIENT_SCRIPT = `<script>
-(function(){
-    document.addEventListener('click',function(e){
-        var btn=e.target.closest('.copy-code-btn');
-        if(!btn)return;
-        var code=decodeURIComponent(btn.dataset.code||'');
-        navigator.clipboard.writeText(code).then(function(){
-            btn.classList.add('copied');
-            var icon=btn.querySelector('i');
-            if(icon){icon.className='ri-check-line';}
-            setTimeout(function(){
-                btn.classList.remove('copied');
-                if(icon){icon.className='ri-file-copy-line';}
-            },2000);
-        });
-    });
-})();
-</script>`;
-
 export interface PrerenderOptions {
     indexHtml?: string;
     base?: string;
@@ -115,7 +96,7 @@ export async function prerenderPage(context: PageContext, opts: PrerenderOptions
     const ctxScript = `<script type="application/json" id="__DOC_CTX__">${safeJson}</script>`;
 
     const jsBundles = buildJsBundles(opts.assets);
-    return html.replace("</body>", `${ctxScript}\n${CLIENT_SCRIPT}\n${jsBundles}\n</body>`);
+    return html.replace("</body>", `${ctxScript}\n${jsBundles}\n</body>`);
 }
 
 function buildJsBundles(assets: AssetManifest | null | undefined): string {

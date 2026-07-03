@@ -27,7 +27,8 @@
                     }
                 ],
                 "styles": [
-                    "apps/web/src/styles.scss"
+                    "apps/web/src/styles.scss",
+                    "apps/web/src/app/presentation/views/content/content.scss"
                 ],
                 "stylePreprocessorOptions": {
                     "includePaths": [
