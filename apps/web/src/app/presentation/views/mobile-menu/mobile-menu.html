@@ -1,0 +1,14 @@
+@if (mobileMenuOpen()) {
+    <button class="md:hidden fixed inset-0 z-80 bg-black/45" (click)="close()">
+        <button class="absolute top-0 left-0 bottom-0 w-70 bg-background border-r border-border overflow-y-auto shadow-[4px_0_24px_rgba(0,0,0,0.12)] flex flex-col"
+            (click)="$event.stopPropagation()">
+            <div class="flex items-center justify-between px-4 h-14.25 border-b border-border shrink-0">
+                <doc-logo />
+                <button ai-button variant="ghost" size="xs" (click)="close()" aria-label="Fechar menu" icon="close"></button>
+            </div>
+            <button class="flex-1 overflow-y-auto" (click)="close()">
+                <doc-sidebar />
+            </button>
+        </button>
+    </button>
+}
