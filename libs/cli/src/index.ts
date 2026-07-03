@@ -1,18 +1,17 @@
 #!/usr/bin/env node
 import { Command } from "commander";
 import { readFileSync } from "fs";
-import { dirname, resolve } from "path";
+import { resolve } from "path";
 
 import { runBuild } from "./commands/build";
 import { runDev } from "./commands/dev";
 import { runInit } from "./commands/init";
 import { logger } from "./config/logger";
 
-const __dirname = dirname(__filename);
 let pkg: { version: string } = { version: "0.0.0" };
 
 try {
-    pkg = JSON.parse(readFileSync(resolve(__dirname, "../../package.json"), "utf-8")) as { version: string };
+    pkg = JSON.parse(readFileSync(resolve(__dirname, "./package.json"), "utf-8")) as { version: string };
 } catch {
     /* ignore — version stays 0.0.0 */
 }

@@ -1,9 +1,10 @@
 import type MarkdownIt from "markdown-it";
+import type { RenderRule } from "markdown-it/lib/renderer.mjs";
 
 export function applyMermaidPlugin(md: MarkdownIt): void {
     const originalFence = md.renderer.rules["fence"];
 
-    md.renderer.rules["fence"] = (tokens, idx, options, env, self) => {
+    const fenceRule: RenderRule = (tokens, idx, options, env, self) => {
         const token = tokens[idx];
         const lang = token.info.trim().split(/\s+/)[0];
 
@@ -20,4 +21,6 @@ export function applyMermaidPlugin(md: MarkdownIt): void {
 
         return originalFence ? originalFence(tokens, idx, options, env, self) : self.renderToken(tokens, idx, options);
     };
+
+    md.renderer.rules["fence"] = fenceRule;
 }

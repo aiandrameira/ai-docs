@@ -2,8 +2,6 @@ import { createJiti } from "jiti";
 import * as path from "path";
 import { z } from "zod";
 
-import type { SiteConfig } from "../../../core";
-
 const EditOnGitHubSchema = z.object({
     repo: z.string().min(1),
     branch: z.string().default("main"),
@@ -52,6 +50,12 @@ const SiteConfigSchema = z.object({
         })
         .optional(),
 });
+
+export type SiteConfig = z.infer<typeof SiteConfigSchema>;
+
+export function defineConfig(config: SiteConfig): SiteConfig {
+    return config;
+}
 
 export async function loadConfig(configPath: string): Promise<SiteConfig> {
     const resolved = path.resolve(configPath);

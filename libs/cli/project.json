@@ -6,13 +6,21 @@
     "tags": [],
     "targets": {
         "build": {
-            "executor": "@nx/js:tsc",
+            "executor": "@nx/esbuild:esbuild",
             "outputs": ["{options.outputPath}"],
+            "dependsOn": ["^build"],
             "options": {
                 "outputPath": "dist/libs/cli",
                 "main": "libs/cli/src/index.ts",
+                "additionalEntryPoints": ["libs/cli/src/config.ts"],
                 "tsConfig": "libs/cli/tsconfig.lib.json",
-                "assets": ["libs/cli/*.md"]
+                "assets": ["libs/cli/*.md"],
+                "bundle": true,
+                "thirdParty": true,
+                "platform": "node",
+                "format": ["cjs"],
+                "declaration": false,
+                "generatePackageJson": false
             }
         }
     }
