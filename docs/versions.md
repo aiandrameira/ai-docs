@@ -27,7 +27,7 @@ Recomendamos sempre usar a versão LTS mais recente do Node.js.
 
 ## Angular
 
-O AI-Docs usa Angular internamente para a renderização SSR. Você **não precisa** ter Angular no seu projeto — ele é uma dependência interna do gerador.
+O AI-Docs usa Angular internamente para renderizar o tema via SSR. Você **não precisa** ter Angular no seu projeto — o motor de renderização já vem embutido e pré-buildado dentro do pacote `@aiandrameira/cli`; o resultado final (`ai-docs build`) é sempre HTML estático puro.
 
 | Angular | Versão do AI-Docs |
 |---------|-------------------|

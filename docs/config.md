@@ -11,7 +11,7 @@ Toda a configuração do AI-Docs fica em `ai-docs.config.ts` na raiz do projeto.
 ## Estrutura básica
 
 ```ts
-import { defineConfig } from '@aiandrameira/ai-docs';
+import { defineConfig } from '@aiandrameira/cli/config';
 
 export default defineConfig({
   title: 'Minha Documentação',
