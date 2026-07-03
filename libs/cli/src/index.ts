@@ -37,7 +37,7 @@ program
         await runAction(async () => {
             const { loadConfig } = await import("./config/loader");
             const config = await loadConfig(opts.config);
-            await runBuild(config);
+            await runBuild(config as never);
         });
     });
 
@@ -50,7 +50,7 @@ program
         await runAction(async () => {
             const { loadConfig } = await import("./config/loader");
             const config = await loadConfig(opts.config);
-            await runDev(config, parseInt(opts.port, 10));
+            await runDev(config as never, parseInt(opts.port, 10));
         });
     });
 

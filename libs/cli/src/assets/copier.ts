@@ -15,10 +15,20 @@ export function makeAssetManifest(raw: Partial<AssetManifest> = {}): AssetManife
     };
 }
 
-export async function copyAngularAssets(outRoot: string, cwd: string = process.cwd()): Promise<AssetManifest | null> {
-    const angularBuildDir = path.join(cwd, "dist", "apps", "web", "browser");
+export function resolveAngularBrowserDir(cwd: string = process.cwd()): string | null {
+    const devDir = path.join(cwd, "dist", "apps", "web", "browser");
+    if (fs.existsSync(devDir)) return devDir;
 
-    if (!fs.existsSync(angularBuildDir)) return null;
+    const bundledDir = path.resolve(__dirname, "web", "browser");
+    if (fs.existsSync(bundledDir)) return bundledDir;
+
+    return null;
+}
+
+export async function copyAngularAssets(outRoot: string, cwd: string = process.cwd()): Promise<AssetManifest | null> {
+    const angularBuildDir = resolveAngularBrowserDir(cwd);
+
+    if (!angularBuildDir) return null;
 
     const assetsDir = path.join(outRoot, "assets");
     fs.mkdirSync(assetsDir, { recursive: true });
@@ -82,6 +92,17 @@ export async function copyAngularAssets(outRoot: string, cwd: string = process.c
     }
 
     return manifest;
+}
+
+export function copyBundledTheme(outRoot: string): AssetManifest | null {
+    const themeCss = path.resolve(__dirname, "assets", "theme.css");
+    if (!fs.existsSync(themeCss)) return null;
+
+    const assetsDir = path.join(outRoot, "assets");
+    fs.mkdirSync(assetsDir, { recursive: true });
+    fs.copyFileSync(themeCss, path.join(assetsDir, "theme.css"));
+
+    return makeAssetManifest({ cssFile: "assets/theme.css" });
 }
 
 export function copyDocsAssets(docsRoot: string, outRoot: string): void {

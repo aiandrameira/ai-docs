@@ -1,8 +1,10 @@
 import * as fs from "fs";
 import * as path from "path";
+import { pathToFileURL } from "url";
 
 import { buildBreadcrumb, buildSearchIndex, buildSidebar, extractToc, parseFileAsync, resolvePrevNext } from "@aiandrameira/core";
-import { copyAngularAssets, copyDocsAssets, copyMermaidAsset } from "../assets/copier";
+
+import { copyAngularAssets, copyBundledTheme, copyDocsAssets, copyMermaidAsset } from "../assets/copier";
 import { logger } from "../config/logger";
 import { spinner } from "../config/spinner";
 
@@ -25,9 +27,12 @@ export async function runBuild(config: SiteConfig, opts: { quiet?: boolean } = {
     const setupSpinner = quiet ? null : spinner("Preparando build (assets, parser, Shiki)...");
     setupSpinner?.start();
 
-    const assets = await copyAngularAssets(outRoot);
+    let assets = await copyAngularAssets(outRoot);
     if (!assets) {
-        warnings.push("Angular build not found — run `nx build web` first for full styling. Falling back to static render without CSS.");
+        assets = copyBundledTheme(outRoot);
+        if (!assets) {
+            warnings.push("No theme CSS found — falling back to static render without styling.");
+        }
     }
     copyDocsAssets(docsRoot, outRoot);
     if (config.features?.mermaid) {
@@ -131,10 +136,12 @@ export async function runBuild(config: SiteConfig, opts: { quiet?: boolean } = {
 type Renderer = (ctx: PageContext, assets: AssetManifest | null) => Promise<string>;
 
 async function resolveRenderer(warnings: string[]): Promise<Renderer> {
-    const serverBundle = path.join(process.cwd(), "dist", "apps", "web", "server", "server.mjs");
-    if (fs.existsSync(serverBundle)) {
+    const serverBundlePaths = [path.join(process.cwd(), "dist", "apps", "web", "server", "server.mjs"), path.resolve(__dirname, "web", "server", "server.mjs")];
+
+    for (const serverBundle of serverBundlePaths) {
+        if (!fs.existsSync(serverBundle)) continue;
         try {
-            const mod = (await import(serverBundle)) as { prerenderPage: Renderer };
+            const mod = (await import(pathToFileURL(serverBundle).href)) as { prerenderPage: Renderer };
             if (mod.prerenderPage) {
                 return (ctx, assets) => mod.prerenderPage(ctx, { assets } as never);
             }
@@ -145,14 +152,14 @@ async function resolveRenderer(warnings: string[]): Promise<Renderer> {
 
     try {
         const prerenderSource = path.join(process.cwd(), "apps", "web", "src", "engine", "prerender");
-        const mod = (await import(prerenderSource)) as { prerenderPage: Renderer };
+        const mod = (await import(pathToFileURL(prerenderSource).href)) as { prerenderPage: Renderer };
         return (ctx, assets) => mod.prerenderPage(ctx, { assets } as never);
     } catch {
         // fall through to static
     }
 
-    warnings.push("Angular renderer not available — using static template fallback. Run `npx nx build web` to enable full Angular SSR rendering.");
-    return ctx => Promise.resolve(staticRender(ctx));
+    warnings.push("Angular renderer not available — using static template fallback (theme CSS applied when available).");
+    return (ctx, assets) => Promise.resolve(staticRender(ctx, assets));
 }
 
 function discoverMarkdown(dir: string): string[] {
@@ -175,7 +182,7 @@ function resolveOutputPath(slug: string, outRoot: string): string {
     return path.join(outRoot, slug, "index.html");
 }
 
-function staticRender(ctx: PageContext): string {
+function staticRender(ctx: PageContext, assets: AssetManifest | null): string {
     const { page, sidebar, toc, breadcrumb, prev, next, config } = ctx;
     const title = `${page.frontMatter.title ?? page.slug} — ${config.title}`;
 
@@ -186,58 +193,26 @@ function staticRender(ctx: PageContext): string {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>${escapeHtml(title)}</title>
         ${page.frontMatter.description ? `<meta name="description" content="${escapeHtml(String(page.frontMatter.description))}" />` : ""}
-        <script>(function(){var t=localStorage.getItem('ai-docs-theme');var d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(t==='dark'||(t===null&&d)){document.documentElement.classList.add('dark');}})()</script>
+        ${assets?.cssFile ? `<link rel="stylesheet" href="/${assets.cssFile}" />` : ""}
+        <script>document.addEventListener('click',function(e){var btn=e.target.closest('.copy-code-btn');if(!btn)return;navigator.clipboard.writeText(decodeURIComponent(btn.dataset.code||''));})</script>
     </head>
     <body>
-        <div class="doc-layout">
-            <header class="doc-header"><a href="${config.base ?? "/"}" class="logo">${escapeHtml(config.title)}</a></header>
-            <aside class="doc-sidebar">${renderSidebar(sidebar, page.slug)}</aside>
-            <main class="doc-content">
-                ${renderBreadcrumb(breadcrumb)}
-                <article>${page.content}</article>
-                ${renderPrevNext(prev, next)}
-            </main>
-            <nav class="doc-toc">${renderToc(toc)}</nav>
-        </div>
+        <a href="${config.base ?? "/"}">${escapeHtml(config.title)}</a>
+        <nav aria-label="Navegação">${renderLinkList(sidebar.map(item => ({ href: item.href, label: item.title })))}</nav>
+        ${breadcrumb.length > 1 ? `<nav aria-label="Breadcrumb">${renderLinkList(breadcrumb.map(item => ({ href: item.href, label: item.title })))}</nav>` : ""}
+        <article>${page.content}</article>
+        <nav aria-label="Navegação entre páginas">${renderLinkList([prev, next].filter((item): item is NonNullable<typeof item> => Boolean(item)).map(item => ({ href: item.href, label: item.title })))}</nav>
+        ${toc.length ? `<nav aria-label="Nesta página">${renderLinkList(flattenToc(toc).map(item => ({ href: `#${item.id}`, label: item.text })))}</nav>` : ""}
     </body>
 </html>`;
 }
 
-function renderSidebar(items: ReturnType<typeof buildSidebar>, slug: string): string {
-    function renderItems(list: typeof items): string {
-        return list
-            .map(item => {
-                const active = item.active || item.href === `/${slug}`;
-                const children = item.children?.length ? `<ul>${renderItems(item.children)}</ul>` : "";
-                return `<li><a href="${item.href}" class="${active ? "active" : ""}">${escapeHtml(item.title)}</a>${children}</li>`;
-            })
-            .join("");
-    }
-    return `<ul>${renderItems(items)}</ul>`;
+function renderLinkList(items: Array<{ href?: string; label: string }>): string {
+    return `<ul>${items.map(item => (item.href ? `<li><a href="${item.href}">${escapeHtml(item.label)}</a></li>` : `<li>${escapeHtml(item.label)}</li>`)).join("")}</ul>`;
 }
 
-function renderToc(items: ReturnType<typeof extractToc>): string {
-    if (!items.length) return "";
-    function renderItems(list: typeof items): string {
-        return list.map(item => `<li><a href="#${item.id}">${escapeHtml(item.text)}</a>${item.children.length ? `<ul>${renderItems(item.children)}</ul>` : ""}</li>`).join("");
-    }
-    return `<p>Nesta página</p><ul>${renderItems(items)}</ul>`;
-}
-
-function renderBreadcrumb(items: ReturnType<typeof buildBreadcrumb>): string {
-    return items
-        .map((item, i) => {
-            const isLast = i === items.length - 1;
-            return isLast ? `<span>${escapeHtml(item.title)}</span>` : `<a href="${item.href}">${escapeHtml(item.title)}</a><span>›</span>`;
-        })
-        .join("");
-}
-
-function renderPrevNext(prev: PageContext["prev"], next: PageContext["next"]): string {
-    if (!prev && !next) return "";
-    const prevHtml = prev ? `<a href="${prev.href}">← ${escapeHtml(prev.title)}</a>` : "<span></span>";
-    const nextHtml = next ? `<a href="${next.href}">${escapeHtml(next.title)} →</a>` : "<span></span>";
-    return `<nav>${prevHtml}${nextHtml}</nav>`;
+function flattenToc(items: ReturnType<typeof extractToc>): ReturnType<typeof extractToc> {
+    return items.flatMap(item => [item, ...flattenToc(item.children)]);
 }
 
 function escapeHtml(str: string): string {
