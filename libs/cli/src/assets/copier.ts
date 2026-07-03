@@ -59,6 +59,7 @@ export async function copyAngularAssets(outRoot: string, cwd: string = process.c
             match: (name: string) => /^main(-[A-Z0-9]+)?\.js$/i.test(name),
             run: (src: string, name: string) => {
                 copyToRoot(src, name);
+                manifest.jsFiles.push(name);
             },
         },
         {
@@ -66,6 +67,12 @@ export async function copyAngularAssets(outRoot: string, cwd: string = process.c
             run: (src: string, name: string) => {
                 copyToRoot(src, name);
                 manifest.preloadFiles.push(name);
+            },
+        },
+        {
+            match: (name: string) => /^favicon\.(ico|png|svg)$/i.test(name),
+            run: (src: string, name: string) => {
+                copyToRoot(src, name);
             },
         },
     ];

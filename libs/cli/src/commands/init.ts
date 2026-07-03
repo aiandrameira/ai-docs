@@ -9,7 +9,7 @@ export default defineConfig({
     title: "My Project",
     description: "Project documentation",
     docs: "./docs",
-    output: "./dist",
+    output: "./dist/docs",
     base: "/",
     features: {
         search: true,
