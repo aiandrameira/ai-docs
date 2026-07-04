@@ -1,0 +1,15 @@
+<footer class="flex flex-wrap items-center justify-between gap-3 px-6 py-6 border-t border-border text-sm text-muted-foreground">
+    <div>
+        <span>{{ message }}</span>
+        <span class="mx-1.5">|</span>
+        <span>{{ copyright }}</span>
+    </div>
+
+    <div class="flex items-center gap-2">
+        <a aria-label="GitHub" ai-button variant="ghost" size="sm" icon="github" target="_blank" [href]="social.github"></a>
+        <a aria-label="NPM" ai-button variant="ghost" size="sm" icon="npmjs" target="_blank" [href]="social.npnpmjs"></a>
+        <a aria-label="LinkedIn" ai-button variant="ghost" size="sm" icon="linkedin" target="_blank" [href]="social.linkedin"></a>
+        <ai-separator orientation="vertical" class="h-4" />
+        <ai-badge variant="default" class="text-[10px] leading-none py-1">v{{ version }}</ai-badge>
+    </div>
+</footer>
