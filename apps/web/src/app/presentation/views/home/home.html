@@ -27,7 +27,7 @@
     </div>
 </div>
 
-<div class="relative overflow-hidden py-4 pb-10 mask-[linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+<div class="relative max-w-200 lg:max-w-300 mx-auto overflow-hidden py-4 pb-10 mask-[linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
     <div class="marquee-track flex w-max gap-3">
         @for (item of marqueeItems; track item.key) {
             <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-muted/60 text-xs font-medium text-foreground whitespace-nowrap" [attr.aria-hidden]="item.duplicate ? 'true' : null">

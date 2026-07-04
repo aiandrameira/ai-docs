@@ -39,7 +39,7 @@ export class DocHome {
     protected readonly announcement = "Angular SSR + tema centralizado em componentes";
 
     protected readonly actions: HomeAction[] = [
-        { label: "Começar agora", href: "/instalation", variant: "primary", icon: "rocket-2" },
+        { label: "Começar agora", href: "/introduction", variant: "primary", icon: "rocket-2" },
         { label: "GitHub", href: "https://github.com/aiandrameira/ai-docs", variant: "outline", icon: "github", external: true },
     ];
 
