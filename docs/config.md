@@ -11,7 +11,7 @@ Toda a configuração do AI-Docs fica em `ai-docs.config.ts` na raiz do projeto.
 ## Estrutura básica
 
 ```ts
-import { defineConfig } from '@aiandrameira/cli/config';
+import { defineConfig } from '@aiandrameira/ai-docs/config';
 
 export default defineConfig({
   title: 'Minha Documentação',
@@ -80,6 +80,14 @@ Caminho para o favicon do site.
 favicon: '/assets/favicon.ico'
 ```
 
+### `github`
+
+URL do repositório no GitHub. Se definido, exibe um ícone de GitHub no header, ao lado do alternador de tema.
+
+```ts
+github: 'https://github.com/usuario/repo'
+```
+
 ### `nav`
 
 Links exibidos no header, ao lado do botão de busca.
@@ -116,14 +124,6 @@ Personalizações visuais:
 ```ts
 theme: {
   customCss: '/assets/custom.css',  // CSS extra injetado após o tema padrão
-}
-```
-
-### `footer`
-
-```ts
-footer: {
-  copyright: '© 2026 Meu Projeto',
 }
 ```
 

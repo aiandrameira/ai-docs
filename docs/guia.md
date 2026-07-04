@@ -13,7 +13,7 @@ Este guia cobre o fluxo completo: criar a configuração, escrever páginas, vis
 Em um projeto TypeScript existente, rode:
 
 ```bash
-npx @aiandrameira/cli init
+npx @aiandrameira/ai-docs init
 ```
 
 Isso cria:
