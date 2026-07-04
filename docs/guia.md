@@ -1,7 +1,7 @@
 ---
 title: Guia passo a passo
 description: Do zero ao site de documentação publicado, em menos de 10 minutos.
-order: 4
+order: 5
 ---
 
 # Guia passo a passo
@@ -17,6 +17,7 @@ npx @aiandrameira/ai-docs init
 ```
 
 Isso cria:
+
 - `ai-docs.config.ts` com as opções principais
 - `docs/index.md` como página inicial
 
@@ -26,11 +27,11 @@ Abra `ai-docs.config.ts` e ajuste:
 
 ```ts
 export default defineConfig({
-  title: 'Minha Lib',
-  description: 'Documentação da minha biblioteca TypeScript.',
-  docs: './docs',
-  output: './dist/docs',
-  base: '/',
+    title: "Minha Lib",
+    description: "Documentação da minha biblioteca TypeScript.",
+    docs: "./docs",
+    output: "./dist/docs",
+    base: "/",
 });
 ```
 
@@ -55,7 +56,6 @@ Use o frontmatter para definir título e ordem:
 title: Instalação
 order: 2
 ---
-
 # Instalação
 
 Conteúdo da página...
@@ -74,7 +74,9 @@ O servidor inicia em [http://localhost:4555](http://localhost:4555) com hot relo
 Habilite o suporte no config:
 
 ```ts
-features: { mermaid: true }
+features: {
+    mermaid: true;
+}
 ```
 
 Então use blocos de código com a linguagem `mermaid`:
@@ -91,7 +93,9 @@ graph LR
 ## 6. Ativar busca
 
 ```ts
-features: { search: true }
+features: {
+    search: true;
+}
 ```
 
 A busca indexa títulos e conteúdo de todas as páginas automaticamente. O atalho ⌘K (ou Ctrl+K) abre a paleta de comandos.
@@ -113,22 +117,22 @@ Adicione um workflow `.github/workflows/docs.yml`:
 ```yaml
 name: Deploy Docs
 on:
-  push:
-    branches: [main]
+    push:
+        branches: [main]
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - run: npm ci
-      - run: npm run docs:build
-      - uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist/docs
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+            - run: npm ci
+            - run: npm run docs:build
+            - uses: peaceiris/actions-gh-pages@v4
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: ./dist/docs
 ```
 
 ### Vercel / Netlify

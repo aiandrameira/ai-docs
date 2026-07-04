@@ -1,7 +1,7 @@
 ---
 title: Instalação
-description: Como instalar e inicializar o AI-Docs em um projeto TypeScript.
-order: 2
+description: Como instalar e inicializar o AiDocs em um projeto TypeScript.
+order: 3
 ---
 
 # Instalação
@@ -35,10 +35,10 @@ Adicione os scripts ao `package.json`:
 
 ```json
 {
-  "scripts": {
-    "docs:dev": "ai-docs dev",
-    "docs:build": "ai-docs build"
-  }
+    "scripts": {
+        "docs:dev": "ai-docs dev",
+        "docs:build": "ai-docs build"
+    }
 }
 ```
 

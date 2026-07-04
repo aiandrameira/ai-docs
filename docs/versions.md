@@ -1,37 +1,37 @@
 ---
 title: Suporte a versões
-description: Política de suporte a versões do AI-Docs e do Node.js.
-order: 5
+description: Política de suporte a versões do AiDocs e do Node.js.
+order: 6
 ---
 
 # Suporte a versões
 
-## Versões do AI-Docs
+## Versões do AiDocs
 
-| Versão | Status       | Suporte até |
-|--------|-------------|-------------|
-| 0.x    | Em desenvolvimento | — |
+| Versão | Status             | Suporte até |
+| ------ | ------------------ | ----------- |
+| 0.x    | Em desenvolvimento | —           |
 
-O AI-Docs ainda está em desenvolvimento ativo. A API pública pode mudar entre versões `0.x`. A partir da `1.0.0`, o projeto adotará [Semantic Versioning](https://semver.org/lang/pt-BR/).
+O AiDocs ainda está em desenvolvimento ativo. A API pública pode mudar entre versões `0.x`. A partir da `1.0.0`, o projeto adotará [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
 ## Node.js
 
-| Node.js | Suportado |
-|---------|-----------|
-| 22.x (LTS) | ✅ |
-| 20.x (LTS) | ✅ |
-| 18.x | ⚠️ Não testado |
-| < 18 | ❌ |
+| Node.js    | Suportado      |
+| ---------- | -------------- |
+| 22.x (LTS) | ✅             |
+| 20.x (LTS) | ✅             |
+| 18.x       | ⚠️ Não testado |
+| < 18       | ❌             |
 
 Recomendamos sempre usar a versão LTS mais recente do Node.js.
 
 ## Angular
 
-O AI-Docs usa Angular internamente para renderizar o tema via SSR. Você **não precisa** ter Angular no seu projeto — o motor de renderização já vem embutido e pré-buildado dentro do pacote `@aiandrameira/ai-docs`; o resultado final (`ai-docs build`) é sempre HTML estático puro.
+O AiDocs usa Angular internamente para renderizar o tema via SSR. Você **não precisa** ter Angular no seu projeto — o motor de renderização já vem embutido e pré-buildado dentro do pacote `@aiandrameira/ai-docs`; o resultado final (`ai-docs build`) é sempre HTML estático puro.
 
-| Angular | Versão do AI-Docs |
-|---------|-------------------|
-| 21.x | 0.x |
+| Angular | Versão do AiDocs |
+| ------- | ---------------- |
+| 21.x    | 0.x              |
 
 ## Compatibilidade de build
 

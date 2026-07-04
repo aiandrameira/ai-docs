@@ -1,24 +1,24 @@
 ---
 title: Configuração
 description: Referência completa do arquivo ai-docs.config.ts e de todas as opções disponíveis.
-order: 3
+order: 4
 ---
 
 # Configuração
 
-Toda a configuração do AI-Docs fica em `ai-docs.config.ts` na raiz do projeto.
+Toda a configuração do AiDocs fica em `ai-docs.config.ts` na raiz do projeto.
 
 ## Estrutura básica
 
 ```ts
-import { defineConfig } from '@aiandrameira/ai-docs/config';
+import { defineConfig } from "@aiandrameira/ai-docs/config";
 
 export default defineConfig({
-  title: 'Minha Documentação',
-  description: 'Descrição do projeto.',
-  docs: './docs',
-  output: './dist/docs',
-  base: '/',
+    title: "Minha Documentação",
+    description: "Descrição do projeto.",
+    docs: "./docs",
+    output: "./dist/docs",
+    base: "/",
 });
 ```
 
@@ -29,7 +29,7 @@ export default defineConfig({
 Nome do site, exibido no header e nas meta tags.
 
 ```ts
-title: 'AI-Docs'
+title: "AiDocs";
 ```
 
 ### `description`
@@ -37,7 +37,7 @@ title: 'AI-Docs'
 Descrição padrão para SEO e Open Graph.
 
 ```ts
-description: 'Gerador de documentação estática.'
+description: "Gerador de documentação estática.";
 ```
 
 ### `docs`
@@ -45,7 +45,7 @@ description: 'Gerador de documentação estática.'
 Caminho para a pasta com os arquivos Markdown. Padrão: `./docs`.
 
 ```ts
-docs: './docs'
+docs: "./docs";
 ```
 
 ### `output`
@@ -53,7 +53,7 @@ docs: './docs'
 Pasta de saída do build. Padrão: `./dist/docs`.
 
 ```ts
-output: './dist/docs'
+output: "./dist/docs";
 ```
 
 ### `base`
@@ -61,7 +61,7 @@ output: './dist/docs'
 URL base do site. Útil para deploys em subpaths (ex: GitHub Pages em `/meu-repo/`).
 
 ```ts
-base: '/meu-repo/'
+base: "/meu-repo/";
 ```
 
 ### `logo`
@@ -69,7 +69,7 @@ base: '/meu-repo/'
 Caminho para a imagem de logo exibida no header. Se omitido, exibe um ícone genérico com o `title`.
 
 ```ts
-logo: '/assets/logo.svg'
+logo: "/assets/logo.svg";
 ```
 
 ### `favicon`
@@ -77,7 +77,7 @@ logo: '/assets/logo.svg'
 Caminho para o favicon do site.
 
 ```ts
-favicon: '/assets/favicon.ico'
+favicon: "/assets/favicon.ico";
 ```
 
 ### `github`
@@ -85,7 +85,7 @@ favicon: '/assets/favicon.ico'
 URL do repositório no GitHub. Se definido, exibe um ícone de GitHub no header, ao lado do alternador de tema.
 
 ```ts
-github: 'https://github.com/usuario/repo'
+github: "https://github.com/usuario/repo";
 ```
 
 ### `nav`
@@ -94,9 +94,9 @@ Links exibidos no header, ao lado do botão de busca.
 
 ```ts
 nav: [
-  { label: 'GitHub', href: 'https://github.com/usuario/repo' },
-  { label: 'npm', href: 'https://npmjs.com/package/meu-pacote' },
-]
+    { label: "GitHub", href: "https://github.com/usuario/repo" },
+    { label: "npm", href: "https://npmjs.com/package/meu-pacote" },
+];
 ```
 
 ### `features`
@@ -135,10 +135,10 @@ Cada arquivo Markdown aceita frontmatter YAML para controlar sua exibição:
 ---
 title: Título da página
 description: Descrição para SEO
-order: 1          # posição na sidebar (menor = primeiro)
-draft: true       # oculta a página do build
-sidebar: false    # oculta da sidebar mas ainda acessível pela URL
-toc: false        # desativa o sumário lateral
+order: 1 # posição na sidebar (menor = primeiro)
+draft: true # oculta a página do build
+sidebar: false # oculta da sidebar mas ainda acessível pela URL
+toc: false # desativa o sumário lateral
 breadcrumb: false # desativa o breadcrumb
 ---
 ```
