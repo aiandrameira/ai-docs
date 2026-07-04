@@ -1,0 +1,9 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "outDir": "../../dist/out-tsc/ai-docs",
+        "declaration": true,
+        "types": ["node"]
+    },
+    "include": ["src/**/*.ts"]
+}

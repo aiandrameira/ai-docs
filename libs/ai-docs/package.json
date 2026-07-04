@@ -1,0 +1,25 @@
+{
+    "name": "@aiandrameira/ai-docs",
+    "version": "0.0.1",
+    "type": "commonjs",
+    "main": "./index.cjs",
+    "types": "./src/index.d.ts",
+    "bin": {
+        "ai-docs": "index.cjs"
+    },
+    "exports": {
+        ".": {
+            "types": "./src/index.d.ts",
+            "default": "./index.cjs"
+        },
+        "./config": {
+            "types": "./src/config.d.ts",
+            "default": "./config.cjs"
+        }
+    },
+    "publishConfig": {
+        "access": "restricted",
+        "registry": "https://npm.pkg.github.com"
+    },
+    "dependencies": {}
+}
