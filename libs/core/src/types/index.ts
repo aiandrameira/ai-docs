@@ -68,11 +68,6 @@ export interface FeaturesConfig {
     editOnGitHub?: EditOnGitHub;
 }
 
-export interface FooterConfig {
-    message?: string;
-    copyright?: string;
-}
-
 export interface AiDocsPlugin {
     name: string;
     transform?: (page: DocPage) => DocPage | Promise<DocPage>;
@@ -84,6 +79,7 @@ export interface SiteConfig {
     description?: string;
     logo?: string;
     favicon?: string;
+    github?: string;
     docs: string;
     output: string;
     base: string;
@@ -91,7 +87,6 @@ export interface SiteConfig {
     theme?: ThemeConfig;
     features?: FeaturesConfig;
     plugins?: AiDocsPlugin[];
-    footer?: FooterConfig;
 }
 
 export interface PageContext {
