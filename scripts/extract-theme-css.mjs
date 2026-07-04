@@ -4,7 +4,7 @@ import { fileURLToPath } from "url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const browserDir = resolve(root, "dist/apps/web/browser");
-const destDir = resolve(root, "libs/cli/src/assets");
+const destDir = resolve(root, "libs/ai-docs/src/assets");
 const destFile = resolve(destDir, "theme.css");
 
 if (!existsSync(browserDir)) {
@@ -22,4 +22,4 @@ if (!cssFile) {
 mkdirSync(destDir, { recursive: true });
 copyFileSync(resolve(browserDir, cssFile), destFile);
 
-console.log(`Theme CSS extracted: ${cssFile} -> libs/cli/src/assets/theme.css`);
+console.log(`Theme CSS extracted: ${cssFile} -> libs/ai-docs/src/assets/theme.css`);
