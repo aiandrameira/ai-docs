@@ -26,16 +26,35 @@
 
     <div class="flex items-center gap-2 ml-auto">
         @if (config?.features?.search !== false) {
-            <button class="flex items-center gap-2 px-3 py-1.5 border border-border rounded-md bg-muted text-muted-foreground cursor-pointer text-sm font-[inherit] transition-colors whitespace-nowrap hover:bg-ghost hover:border-ring"
-                (click)="openSearch()"
-                aria-label="Buscar">
-                <ai-icon icon="search" size="sm" />
-                <span>Buscar...</span>
-                <kbd class="hidden md:inline text-[10px] px-1.5 py-0.5 border border-border rounded bg-background font-code">⌘K</kbd>
-            </button>
+            <ai-button variant="ghost" size="sm" (click)="openSearch()" class="bg-primary/5 text-muted-foreground font-medium hover:bg-primary/8 relative h-8 w-max justify-start pl-4 shadow-none sm:pr-12">
+                <span class="inline-flex mr-3">Pesquisar na documentação...</span>
+                <div class="absolute top-1.5 right-2 hidden gap-1 sm:flex">
+                    <kbd class="bg-background text-muted-foreground pointer-events-none flex h-5 items-center justify-center gap-1 rounded px-1 font-sans text-[0.7rem] font-medium select-none">
+                        ⌘
+                    </kbd>
+                    <kbd class="bg-background text-muted-foreground pointer-events-none flex aspect-square h-5 items-center justify-center gap-1 rounded px-1 font-sans text-[0.7rem] font-medium select-none">
+                        K
+                    </kbd>
+                </div>
+            </ai-button>
+        }
+
+        @if (config?.github) {
+            <ai-separator orientation="vertical" class="h-4" />
+            <a ai-button
+                variant="ghost"
+                size="xs"
+                [href]="config!.github"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="GitHub"
+                aria-label="GitHub"
+                icon="github"
+            ></a>
         }
 
         @if (config?.features?.darkMode !== false) {
+            <ai-separator orientation="vertical" class="h-4" />
             <ai-button variant="ghost"
                 size="xs"
                 (click)="toggleDark()"

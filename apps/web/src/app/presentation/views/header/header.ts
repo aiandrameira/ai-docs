@@ -1,4 +1,4 @@
-import { AiButton, AiIcon, ThemeStore } from "@aiandralves/ai-ui";
+import { AiButton, AiIcon, AiSeparator, ThemeStore } from "@aiandralves/ai-ui";
 import { isPlatformBrowser } from "@angular/common";
 import { ChangeDetectionStrategy, Component, computed, inject, PLATFORM_ID } from "@angular/core";
 import { LayoutService } from "@infra/services";
@@ -8,7 +8,7 @@ import { DocLogo } from "../logo/logo";
 
 @Component({
     selector: "doc-header",
-    imports: [AiButton, AiIcon, DocLogo],
+    imports: [AiButton, AiIcon, DocLogo, AiSeparator],
     templateUrl: "./header.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
