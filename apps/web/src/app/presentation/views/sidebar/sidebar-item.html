@@ -10,9 +10,9 @@
         </ul>
     </li>
 } @else {
-    <li>
+    <li class="my-0.5">
         <a [href]="item().href"
-            class="relative flex items-center font-semibold gap-2 py-1.5 px-5 text-sm text-muted-foreground transition-colors hover:bg-ghost hover:text-primary"
+            class="relative flex items-center font-semibold gap-2 py-1.5 px-5 rounded-sm text-sm text-muted-foreground transition-colors hover:bg-ghost hover:text-primary"
             [ngClass]="item().active ? activeClass : null">
             {{ item().title }}
         </a>
