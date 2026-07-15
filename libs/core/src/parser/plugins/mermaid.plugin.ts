@@ -12,6 +12,10 @@ export function applyMermaidPlugin(md: MarkdownIt): void {
             const escaped = token.content.trim().replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
             return `<div class="mermaid-block" data-mermaid="${encodeURIComponent(token.content.trim())}">
+    <div class="mermaid-toolbar">
+        <button type="button" class="mermaid-zoom-out" aria-label="Diminuir zoom"><i class="ri-zoom-out-line"></i></button>
+        <button type="button" class="mermaid-zoom-in" aria-label="Aumentar zoom"><i class="ri-zoom-in-line"></i></button>
+    </div>
     <pre class="mermaid-source">${escaped}</pre>
     <div class="mermaid-render" aria-label="Diagrama Mermaid">
         <span class="mermaid-loading">Carregando diagrama...</span>
