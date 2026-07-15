@@ -46,7 +46,10 @@ export class DocToc implements AfterViewInit, OnDestroy {
                 },
                 { rootMargin: "-57px 0px -80% 0px", threshold: 0 },
             );
-            elements.forEach(el => this.#observer!.observe(el));
+            elements.forEach(el => {
+                if (!this.#observer) return;
+                this.#observer.observe(el);
+            });
         });
     }
 
