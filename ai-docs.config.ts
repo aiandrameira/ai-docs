@@ -7,13 +7,11 @@ export default defineConfig({
     output: "./dist/docs-preview",
     base: "/",
     logo: "/assets/img/logo.svg",
+    github: "https://github.com/aiandrameira/ai-docs",
     features: {
         search: true,
         darkMode: true,
         copyCode: true,
         mermaid: true,
-    },
-    footer: {
-        copyright: "© 2026 Aiandra Alves",
     },
 });

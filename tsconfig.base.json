@@ -42,8 +42,8 @@
             "@libs/core": [
                 "libs/core/src/index.ts"
             ],
-            "@aiandrameira/cli": [
-                "libs/cli/src/index.ts"
+            "@aiandrameira/ai-docs": [
+                "libs/ai-docs/src/index.ts"
             ]
         }
     },
