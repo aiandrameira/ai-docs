@@ -112,15 +112,7 @@ function applyAnchorPlugin(md: MarkdownIt): void {
 
         token.attrSet("id", id);
 
-        const level = token.tag;
-        const rendered = defaultRender(tokens, idx, options, env, self);
-
-        if (level === "h2" || level === "h3" || level === "h4") {
-            const closingBracket = rendered.lastIndexOf(">");
-            return rendered.slice(0, closingBracket + 1) + `<a href="#${id}" class="anchor-link" aria-label="Link para seção" tabindex="-1">` + `<i class="ri-link-m"></i></a>`;
-        }
-
-        return rendered;
+        return defaultRender(tokens, idx, options, env, self);
     };
 }
 
