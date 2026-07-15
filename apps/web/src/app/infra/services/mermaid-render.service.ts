@@ -35,6 +35,7 @@ export class MermaidRenderService {
                         .render(id, def)
                         .then(r => {
                             renderEl.innerHTML = r.svg;
+                            this._sizeToNative(renderEl);
                         })
                         .catch(err => {
                             console.error("Mermaid render error:", err);
@@ -53,5 +54,15 @@ export class MermaidRenderService {
                     if (loader) loader.textContent = "Mermaid não disponível";
                 });
             });
+    }
+
+    private _sizeToNative(renderEl: HTMLElement): void {
+        const svg = renderEl.querySelector("svg");
+        const viewBox = svg?.viewBox?.baseVal;
+        if (!svg || !viewBox?.width || !viewBox?.height) return;
+
+        svg.setAttribute("width", `${viewBox.width}px`);
+        svg.setAttribute("height", `${viewBox.height}px`);
+        svg.style.maxWidth = "none";
     }
 }
