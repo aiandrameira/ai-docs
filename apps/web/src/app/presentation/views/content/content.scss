@@ -42,7 +42,7 @@ doc-content {
     }
 
     p {
-        @apply text-sm text-muted-foreground mb-4 leading-relaxed text-justify;
+        @apply text-sm text-muted-foreground font-text font-semibold mb-4 leading-relaxed text-justify;
     }
     em,
     p em {
@@ -118,7 +118,7 @@ doc-content {
         @apply w-full border-collapse mb-5 text-sm;
     }
     th {
-        @apply px-3 py-2 bg-muted font-semibold text-left border-b border-border text-foreground;
+        @apply px-3 py-2 bg-muted uppercase font-title text-[10px] font-bold text-left border-b border-border text-primary;
     }
     td {
         @apply px-3 py-2 border-b border-border text-muted-foreground;
@@ -333,9 +333,8 @@ doc-content {
         @apply hidden whitespace-pre-wrap font-code text-sm;
     }
     .mermaid-render {
-        @apply flex justify-center;
         svg {
-            @apply max-w-full;
+            @apply w-auto h-auto max-w-none;
         }
     }
     .mermaid-loading {
