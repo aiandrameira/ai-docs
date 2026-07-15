@@ -14,4 +14,5 @@ export default defineConfig({
         copyCode: true,
         mermaid: true,
     },
+    home: true,
 });
