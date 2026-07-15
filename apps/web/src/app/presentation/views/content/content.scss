@@ -147,6 +147,10 @@ doc-content {
         @apply inline-flex items-center gap-1 bg-default text-default-foreground text-xs font-semibold px-2 py-0.5 rounded-full font-text;
     }
 
+    .arrow-icon {
+        @apply inline-block align-middle text-[0.9em] text-muted-foreground mx-0.5;
+    }
+
     // ── Callouts ──────────────────────────────────────────
     .callout {
         @apply flex items-center gap-2 border-l-4 border border-r-0 border-t-0 border-b-0 rounded-lg px-4 py-3 mb-4;
