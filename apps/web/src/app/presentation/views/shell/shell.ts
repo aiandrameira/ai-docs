@@ -22,7 +22,7 @@ import { DocToc } from "../toc/toc";
 export class DocShell {
     #ctx = inject(DOC_PAGE_CONTEXT, { optional: true });
     protected layout = inject(LayoutService);
-    protected isHome = this.#ctx?.page?.slug === "";
+    protected isHome = this.#ctx?.page?.slug === "" && this.#ctx?.config?.home === true;
 
     constructor() {
         const doc = inject(DOCUMENT);
