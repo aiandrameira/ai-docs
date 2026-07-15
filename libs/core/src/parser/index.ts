@@ -2,6 +2,7 @@ import matter from "gray-matter";
 import MarkdownIt from "markdown-it";
 import * as path from "path";
 
+import { applyArrowIconPlugin } from "./plugins/arrow.plugin";
 import { applyCalloutPlugin } from "./plugins/callout.plugin";
 import { applyDirectivePlugin } from "./plugins/directive.plugin";
 import { applyMermaidPlugin } from "./plugins/mermaid.plugin";
@@ -21,6 +22,7 @@ export function createParser(): MarkdownIt {
     applyAnchorPlugin(md);
     applyCalloutPlugin(md);
     applyDirectivePlugin(md);
+    applyArrowIconPlugin(md);
     applyCopyCodePlugin(md);
 
     return md;
@@ -32,6 +34,7 @@ export async function createAsyncParser(opts: ParserOptions = {}): Promise<Markd
     applyAnchorPlugin(md);
     applyCalloutPlugin(md);
     applyDirectivePlugin(md);
+    applyArrowIconPlugin(md);
 
     if (opts.shiki !== false) {
         await applyShikiPlugin(md, {

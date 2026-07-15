@@ -87,6 +87,8 @@ export interface SiteConfig {
     theme?: ThemeConfig;
     features?: FeaturesConfig;
     plugins?: AiDocsPlugin[];
+    /** @internal Reserved for the AiDocs project's own site — renders the marketing home page instead of the docs sidebar on `/`. Not meant for consumer projects. */
+    home?: boolean;
 }
 
 export interface PageContext {

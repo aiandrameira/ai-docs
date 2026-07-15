@@ -26,6 +26,8 @@ export interface SiteConfig {
         editOnGitHub?: { repo: string; branch: string; docsDir: string };
     };
     plugins?: unknown[];
+    /** @internal Reserved for the AiDocs project's own site. Not meant for consumer projects. */
+    home?: boolean;
 }
 
 const EditOnGitHubSchema = z.object({
@@ -70,6 +72,7 @@ const SiteConfigSchema = z.object({
         })
         .optional(),
     plugins: z.array(z.any()).optional(),
+    home: z.boolean().optional(),
 });
 
 export function defineConfig(config: SiteConfig): SiteConfig {

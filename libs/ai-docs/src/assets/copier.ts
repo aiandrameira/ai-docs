@@ -120,13 +120,22 @@ export function copyDocsAssets(docsRoot: string, outRoot: string): void {
     copyDir(src, dest);
 }
 
-export function copyMermaidAsset(outRoot: string, cwd: string = process.cwd()): void {
-    const src = path.join(cwd, "node_modules", "mermaid", "dist", "mermaid.esm.min.mjs");
-    if (!fs.existsSync(src)) return;
+export function copyMermaidAsset(outRoot: string): void {
+    let src: string;
+    try {
+        src = require.resolve("mermaid/dist/mermaid.esm.min.mjs");
+    } catch {
+        return;
+    }
 
     const assetsDir = path.join(outRoot, "assets");
     fs.mkdirSync(assetsDir, { recursive: true });
     fs.copyFileSync(src, path.join(assetsDir, "mermaid.esm.min.mjs"));
+
+    const chunksDir = path.join(path.dirname(src), "chunks", "mermaid.esm.min");
+    if (fs.existsSync(chunksDir)) {
+        copyDir(chunksDir, path.join(assetsDir, "chunks", "mermaid.esm.min"));
+    }
 }
 
 function copyDir(src: string, dest: string): void {
