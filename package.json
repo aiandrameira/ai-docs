@@ -5,9 +5,10 @@
     "scripts": {
         "dev": "npx nx run web:serve --configuration=local --port=4555",
         "build": "npx nx run web:build",
-        "docs:build": "node scripts/run-cli.mjs build",
-        "docs:dev": "node scripts/run-cli.mjs dev --port=4555",
-        "pub": "npx nx run cli:build && npm publish ./dist/libs/cli",
+        "docs:build": "npm run build && node scripts/run-ai-docs.mjs build",
+        "docs:dev": "node scripts/run-ai-docs.mjs dev --port=4555",
+        "theme:build": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\" && npx nx run web:build --skip-nx-cache && node scripts/extract-theme-css.mjs",
+        "pub": "npm run theme:build && npx nx run ai-docs:build --skip-nx-cache && npm publish ./dist/libs/ai-docs",
         "lint": "eslint . --fix",
         "prepare": "husky"
     },
