@@ -42,6 +42,16 @@ Adicione os scripts ao `package.json`:
 }
 ```
 
+Para usar uma porta diferente da padrão (4000), passe `--port` (ou `-p`):
+
+```json
+{
+    "scripts": {
+        "docs:dev": "ai-docs dev --port 4001"
+    }
+}
+```
+
 ## Via npx
 
 Se o `.npmrc` já estiver configurado (globalmente ou no projeto), também é possível rodar sem instalar antes:

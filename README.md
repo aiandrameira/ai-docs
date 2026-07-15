@@ -53,7 +53,7 @@ Adicione os scripts ao `package.json`:
 ```json
 {
     "scripts": {
-        "docs:dev": "ai-docs dev",
+        "docs:dev": "ai-docs dev --port 4001",
         "docs:build": "ai-docs build"
     }
 }
