@@ -1,7 +1,7 @@
 {
     "name": "@aiandralves/ai-docs",
-    "version": "0.0.8",
-    "description": "A comprehensive Angular UI component library with Tailwind CSS",
+    "version": "0.0.9",
+    "description": "Gerador de documentação estática para projetos TypeScript com Angular SSR.",
     "repository": {
         "type": "git",
         "url": "https://github.com/aiandrameira/ai-docs"
@@ -14,7 +14,7 @@
         "typescript",
         "tailwindcss"
     ],
-    "homepage": "https://ai-ui.aiandralves.com.br/",
+    "homepage": "https://ai-docs.aiandralves.com.br",
     "type": "commonjs",
     "main": "./index.cjs",
     "types": "./src/index.d.ts",

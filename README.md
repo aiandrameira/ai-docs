@@ -119,8 +119,8 @@ Comandos principais:
 | `npm run build`       | Compila a aplicação                                 |
 | `npm run docs:dev`    | Executa localmente a documentação deste repositório |
 | `npm run docs:build`  | Gera a documentação estática                        |
-| `npm run theme:build` | Prepara o tema incluído no pacote                   |
-| `npm run pub`         | Compila e publica o pacote no npm público           |
+| `npm run cli:build`   | Gera o pacote completo em `dist/libs/ai-docs`       |
+| `npm run cli:publish` | Gera e publica o pacote no npm público               |
 
 Antes de publicar, autentique-se com `npm login` e confirme que possui acesso ao escopo `@aiandralves`.
 

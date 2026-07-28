@@ -1,23 +1,22 @@
 # @aiandralves/ai-docs
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/aiandrameira/ai-docs/main/apps/web/public/img/logo-dark.svg" width="80" alt="Logo do AiDocs" />
+  <img src="https://raw.githubusercontent.com/aiandrameira/ai-docs/c254e85c3a0b00090b87e2e0fb8402c5992e0844/apps/web/public/img/logo.svg" width="80" alt="Logo do Ai" />
 </p>
 
 <p align="center">
-  <strong>Gere um site de documentação estático a partir de Markdown.</strong><br />
-  Pronto para projetos TypeScript, com busca, dark mode, syntax highlight e Mermaid.
+    <strong>Gere um site de documentação estático a partir de Markdown.</strong><br />
+    Pronto para projetos TypeScript, com busca, dark mode, syntax highlight e Mermaid.
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/@aiandralves/ai-docs"><img src="https://img.shields.io/npm/v/@aiandralves/ai-docs" alt="Versão no npm" /></a>
-  <a href="https://www.npmjs.com/package/@aiandralves/ai-docs"><img src="https://img.shields.io/npm/dm/@aiandralves/ai-docs" alt="Downloads no npm" /></a>
-  <img src="https://img.shields.io/badge/Node.js-%3E%3D20-339933" alt="Node.js 20 ou superior" />
-  <a href="https://github.com/aiandrameira/ai-docs/blob/main/LICENSE.md"><img src="https://img.shields.io/badge/licença-MIT-blue" alt="Licença MIT" /></a>
+    <a href="https://www.npmjs.com/package/@aiandralves/ai-docs"><img src="https://img.shields.io/npm/v/@aiandralves/ai-docs" alt="Versão no npm" /></a>
+    <a href="https://www.npmjs.com/package/@aiandralves/ai-docs"><img src="https://img.shields.io/npm/dm/@aiandralves/ai-docs" alt="Downloads no npm" /></a>
+    <img src="https://img.shields.io/badge/Node.js-%3E%3D20-339933" alt="Node.js 20 ou superior" />
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/aiandrameira/ai-docs/main/preview.png" width="800" alt="Prévia de um site criado com AiDocs" />
+    <img src="https://raw.githubusercontent.com/aiandrameira/ai-docs/main/preview.png" width="800" alt="Prévia de um site criado com AiDocs" />
 </p>
 
 ## Instalação

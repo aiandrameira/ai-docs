@@ -6,9 +6,21 @@
     "tags": [],
     "targets": {
         "build": {
+            "executor": "nx:run-commands",
+            "outputs": ["{workspaceRoot}/dist/libs/ai-docs"],
+            "options": {
+                "commands": [
+                    "npx nx run web:build",
+                    "node scripts/extract-theme-css.mjs",
+                    "npx nx run ai-docs:bundle"
+                ],
+                "parallel": false
+            }
+        },
+        "bundle": {
             "executor": "@nx/esbuild:esbuild",
             "outputs": ["{options.outputPath}"],
-            "dependsOn": ["^build", "web:build"],
+            "dependsOn": ["^build"],
             "options": {
                 "outputPath": "dist/libs/ai-docs",
                 "main": "libs/ai-docs/src/index.ts",
