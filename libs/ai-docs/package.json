@@ -1,11 +1,28 @@
 {
-    "name": "@aiandrameira/ai-docs",
+    "name": "@aiandralves/ai-docs",
     "version": "0.0.8",
+    "description": "A comprehensive Angular UI component library with Tailwind CSS",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/aiandrameira/ai-docs"
+    },
+    "author": "Aiandra Alves <aiandraalves.meira@gmail.com>",
+    "license": "MIT",
+    "keywords": [
+        "ai-ui",
+        "angular",
+        "typescript",
+        "tailwindcss"
+    ],
+    "homepage": "https://ai-ui.aiandralves.com.br/",
     "type": "commonjs",
     "main": "./index.cjs",
     "types": "./src/index.d.ts",
     "bin": {
         "ai-docs": "index.cjs"
+    },
+    "dependencies": {
+        "mermaid": "^11.16.0"
     },
     "exports": {
         ".": {
@@ -18,10 +35,7 @@
         }
     },
     "publishConfig": {
-        "access": "restricted",
-        "registry": "https://npm.pkg.github.com"
-    },
-    "dependencies": {
-        "mermaid": "^11.16.0"
+        "registry": "https://registry.npmjs.org/",
+        "access": "public"
     }
 }

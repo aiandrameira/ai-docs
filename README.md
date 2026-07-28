@@ -1,78 +1,133 @@
-# 📚 @aiandrameira/ai-docs
+# AiDocs
 
 <p align="center">
-    <img src="./apps/web/public/img/logo-dark.svg" width="80" alt="ai-docs logo" />
+    <img src="./apps/web/public/img/logo-dark.svg" width="80" alt="Logo do AiDocs" />
 </p>
 
 <p align="center">
-    <strong>AiDocs</strong> existe para tirar o trabalho de montar um site de documentação do seu caminho.<br />
-    Escreva Markdown na sua lib ou projeto TypeScript e publique um site pronto — sem montar tema, layout ou infraestrutura.
+    <strong>Crie sites de documentação estáticos a partir de arquivos Markdown.</strong><br />
+    Busca, dark mode, syntax highlight e diagramas Mermaid sem precisar montar um frontend.
 </p>
 
 <p align="center">
-    <img src="https://img.shields.io/badge/Angular-21-E90464" alt="Angular" />
-    <img src="https://img.shields.io/npm/v/@aiandrameira/ai-docs" alt="npm version" />
-    <img src="https://img.shields.io/badge/TailwindCSS-4.1.18-00bcff" alt="Tailwind CSS" />
-    <img src="https://img.shields.io/badge/license-MIT-blue" alt="License" />
+    <a href="https://www.npmjs.com/package/@aiandralves/ai-docs"><img src="https://img.shields.io/npm/v/@aiandralves/ai-docs" alt="Versão no npm" /></a>
+    <a href="https://www.npmjs.com/package/@aiandralves/ai-docs"><img src="https://img.shields.io/npm/dm/@aiandralves/ai-docs" alt="Downloads no npm" /></a>
+    <img src="https://img.shields.io/badge/Node.js-%3E%3D20-339933" alt="Node.js 20 ou superior" />
+    <a href="./LICENSE.md"><img src="https://img.shields.io/badge/licença-MIT-blue" alt="Licença MIT" /></a>
 </p>
 
 <p align="center">
-    <img src="./preview.png" width="800" alt="preview" />
+    <img src="./preview.png" width="800" alt="Prévia de um site criado com AiDocs" />
 </p>
 
-## 📍 Visão geral
+## Sobre
 
-Manter documentação boa dá trabalho: normalmente é preciso escolher um framework de docs, configurar tema, busca, dark mode e deploy — e mesmo assim sobra pouco tempo pra escrever o conteúdo em si. O AiDocs resolve isso com uma ideia simples: você escreve `.md`, ele entrega um site completo pronto pra publicar, em qualquer lugar que sirva arquivos estáticos.
+O AiDocs transforma uma pasta de arquivos `.md` em um site de documentação estático, pronto para hospedar no GitHub Pages, Netlify, Vercel ou em qualquer serviço capaz de publicar arquivos estáticos.
 
-Não é preciso conhecer Angular, configurar SSR ou mexer em build de frontend — isso é implementação interna, invisível pra quem usa o pacote.
+- Inicialização rápida com `ai-docs init`
+- Servidor local com atualização automática
+- Busca integrada com atalho `Ctrl+K` ou `⌘K`
+- Dark mode e syntax highlight
+- Diagramas Mermaid no Markdown
+- Navegação, sumário e links entre páginas gerados automaticamente
+- Saída estática, sem servidor de aplicação em produção
 
-- **Zero configuração pra começar** — `ai-docs init` e o site já funciona
-- **Busca embutida** — paleta de comandos (⌘K / Ctrl+K) indexando todo o conteúdo, sem servidor de busca
-- **Diagramas Mermaid** direto no Markdown, sem plugin extra
-- **Dark mode e syntax highlight** prontos por padrão, sem flash e sem JS extra no cliente
-- **Saída 100% estática** — HTML puro, publicável em qualquer CDN ou hospedagem
+O Angular é usado internamente pelo gerador. O projeto que consome o pacote não precisa usar Angular.
 
-## 🚀 Instalação
+## Comece agora
 
-O pacote é publicado no GitHub Packages. Configure o registry do escopo `@aiandrameira` em um `.npmrc`:
-
-```ini
-@aiandrameira:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=SEU_TOKEN_COM_read:packages
-```
-
-Instale e inicialize:
+Requisitos: Node.js 20 ou superior e npm 10 ou superior.
 
 ```bash
-npm install --save-dev @aiandrameira/ai-docs
+npm install --save-dev @aiandralves/ai-docs
 npx ai-docs init
 ```
 
-Adicione os scripts ao `package.json`:
+Adicione os comandos ao `package.json`:
 
 ```json
 {
     "scripts": {
-        "docs:dev": "ai-docs dev --port 4001",
+        "docs:dev": "ai-docs dev",
         "docs:build": "ai-docs build"
     }
 }
 ```
 
-Documentação completa: instalação, configuração e guia passo a passo estão em [`docs/`](./docs) (e publicadas no próprio site gerado pelo projeto).
+Inicie o ambiente local:
 
-## ✨ Stack
+```bash
+npm run docs:dev
+```
 
-- [Angular 21 (SSR)](https://angular.dev)
-- [Nx](https://nx.dev)
-- [TailwindCSS 4](https://tailwindcss.com)
-- [markdown-it](https://github.com/markdown-it/markdown-it)
-- [Shiki](https://shiki.style)
-- [Fuse.js](https://www.fusejs.io)
-- [Mermaid](https://mermaid.js.org)
-- [Commander](https://github.com/tj/commander.js)
-- [Zod](https://zod.dev)
+Depois, abra `http://localhost:4000`. Para gerar os arquivos de produção, execute:
 
-## 📜 Licença
+```bash
+npm run docs:build
+```
 
-MIT
+O diretório final é definido pela propriedade `output` do arquivo `ai-docs.config.ts`.
+
+## Configuração básica
+
+O comando `init` cria a pasta `docs/`, uma página inicial e o arquivo `ai-docs.config.ts`:
+
+```ts
+import { defineConfig } from "@aiandralves/ai-docs/config";
+
+export default defineConfig({
+    title: "Minha documentação",
+    description: "Guias e referência do meu projeto.",
+    docs: "./docs",
+    output: "./dist/docs",
+    base: "/",
+    features: {
+        search: true,
+        darkMode: true,
+        copyCode: true,
+        mermaid: true,
+    },
+});
+```
+
+Cada arquivo Markdown dentro de `docs/` se torna uma página:
+
+```text
+docs/
+├── index.md
+├── instalacao.md
+└── api/
+    └── referencia.md
+```
+
+Consulte os guias em [`docs/`](./docs) para conhecer a configuração, os recursos e as opções de deploy.
+
+## Desenvolvimento do projeto
+
+Instale as dependências e inicie a aplicação de demonstração:
+
+```bash
+npm ci
+npm run dev
+```
+
+Comandos principais:
+
+| Comando               | Descrição                                           |
+| --------------------- | --------------------------------------------------- |
+| `npm run dev`         | Inicia a aplicação de demonstração                  |
+| `npm run build`       | Compila a aplicação                                 |
+| `npm run docs:dev`    | Executa localmente a documentação deste repositório |
+| `npm run docs:build`  | Gera a documentação estática                        |
+| `npm run theme:build` | Prepara o tema incluído no pacote                   |
+| `npm run pub`         | Compila e publica o pacote no npm público           |
+
+Antes de publicar, autentique-se com `npm login` e confirme que possui acesso ao escopo `@aiandralves`.
+
+## Tecnologias
+
+[Angular](https://angular.dev), [Nx](https://nx.dev), [Tailwind CSS](https://tailwindcss.com), [markdown-it](https://github.com/markdown-it/markdown-it), [Shiki](https://shiki.style), [Fuse.js](https://www.fusejs.io), [Mermaid](https://mermaid.js.org), [Commander.js](https://github.com/tj/commander.js) e [Zod](https://zod.dev).
+
+## Licença
+
+Distribuído sob a licença MIT. Consulte [`LICENSE.md`](./LICENSE.md).

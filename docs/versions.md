@@ -1,7 +1,7 @@
 ---
 title: Suporte a versões
 description: Política de suporte a versões do AiDocs e do Node.js.
-order: 6
+order: 7
 ---
 
 # Suporte a versões
