@@ -59,14 +59,17 @@ export async function copyAngularAssets(outRoot: string, cwd: string = process.c
             match: (name: string) => /^main(-[A-Z0-9]+)?\.js$/i.test(name),
             run: (src: string, name: string) => {
                 copyToRoot(src, name);
-                manifest.jsFiles.push(name);
             },
         },
         {
             match: (name: string) => name.startsWith("chunk-") && name.endsWith(".js"),
             run: (src: string, name: string) => {
+                // Copied so lazy dynamic import()s can resolve them at runtime, but NOT
+                // added to the manifest here: most of these chunks are route/feature-lazy
+                // (e.g. per-language syntax highlighting grammars) and must stay lazy.
+                // Which ones are actually needed eagerly is decided below from Angular's
+                // own generated index.csr.html, not by guessing from the filename.
                 copyToRoot(src, name);
-                manifest.preloadFiles.push(name);
             },
         },
         {
@@ -98,7 +101,37 @@ export async function copyAngularAssets(outRoot: string, cwd: string = process.c
         }
     }
 
+    const { jsFiles, preloadFiles } = readEntryScripts(angularBuildDir);
+    manifest.jsFiles = jsFiles;
+    manifest.preloadFiles = preloadFiles;
+
     return manifest;
+}
+
+/**
+ * Angular's own build already knows exactly which chunks are needed eagerly
+ * to bootstrap the app (usually just main.js + a runtime chunk) vs. which are
+ * lazy (routes/features fetched on demand). That distinction lives in the
+ * generated index.csr.html <script>/<link rel="modulepreload"> tags — read it
+ * from there instead of treating every chunk-*.js file as eager, which would
+ * force the browser to download the entire app (including every syntax
+ * highlighting language grammar) on every single page load.
+ */
+function readEntryScripts(angularBuildDir: string): { jsFiles: string[]; preloadFiles: string[] } {
+    const indexPath = path.join(angularBuildDir, "index.csr.html");
+
+    if (fs.existsSync(indexPath)) {
+        const html = fs.readFileSync(indexPath, "utf-8");
+        const jsFiles = [...html.matchAll(/<script[^>]+src="([^"]+)"[^>]*type="module"[^>]*>/gi)].map(m => m[1]);
+        const preloadFiles = [...html.matchAll(/<link[^>]+rel="modulepreload"[^>]+href="([^"]+)"/gi)].map(m => m[1]);
+
+        if (jsFiles.length) return { jsFiles, preloadFiles };
+    }
+
+    // Fallback if index.csr.html isn't available: at least ship main.js eagerly
+    // rather than falling back to preloading every chunk in the build.
+    const mainFile = fs.readdirSync(angularBuildDir).find(name => /^main(-[A-Z0-9]+)?\.js$/i.test(name));
+    return { jsFiles: mainFile ? [mainFile] : [], preloadFiles: [] };
 }
 
 export function copyBundledTheme(outRoot: string): AssetManifest | null {

@@ -1,4 +1,4 @@
-<header class="flex items-center gap-0 px-3 sm:px-6 h-14.25 border-b border-border bg-background">
+<header class="flex items-center gap-0 px-3 sm:px-6 md:px-16 h-14 border-b border-border bg-background">
     <ai-button
         variant="ghost"
         size="xs"
@@ -29,27 +29,29 @@
 
     <div class="flex items-center gap-1 sm:gap-2 ml-auto">
         @if (config?.features?.search !== false) {
-        <ai-button variant="ghost" size="xs" class="sm:hidden" (click)="openSearch()" title="Pesquisar na documentação" aria-label="Pesquisar na documentação" icon="search" />
-        <ai-button
-            variant="ghost"
-            size="sm"
-            (click)="openSearch()"
-            class="hidden bg-primary/5 text-muted-foreground font-medium hover:bg-primary/8 relative h-8 w-max justify-start pl-4 pr-12 shadow-none sm:inline-flex"
-        >
-            <span class="mr-3">Pesquisar na documentação...</span>
-            <div class="absolute top-1.5 right-2 flex gap-1">
-                <kbd
-                    class="bg-background text-muted-foreground pointer-events-none flex h-5 items-center justify-center gap-1 rounded px-1 font-sans text-[0.7rem] font-medium select-none"
-                >
-                    ⌘
-                </kbd>
-                <kbd
-                    class="bg-background text-muted-foreground pointer-events-none flex aspect-square h-5 items-center justify-center gap-1 rounded px-1 font-sans text-[0.7rem] font-medium select-none"
-                >
-                    K
-                </kbd>
-            </div>
-        </ai-button>
+        <div class="sm:hidden">
+            <ai-button variant="ghost" size="xs" (click)="openSearch()" title="Pesquisar na documentação" aria-label="Pesquisar na documentação" icon="search" />
+        </div>
+        <div class="hidden sm:block">
+            <ai-button
+                variant="ghost"
+                size="sm"
+                (click)="openSearch()"
+                class="bg-primary/5 text-muted-foreground font-medium hover:bg-primary/8 relative h-8 w-max justify-start pl-4 pr-12 shadow-none"
+            >
+                <span class="mr-3">Pesquisar na documentação...</span>
+                <div class="absolute top-1.5 right-2 flex gap-1">
+                    <kbd
+                        class="bg-background text-muted-foreground pointer-events-none flex h-5 items-center justify-center gap-1 rounded px-1 font-sans text-[0.7rem] font-medium select-none"
+                        >⌘</kbd
+                    >
+                    <kbd
+                        class="bg-background text-muted-foreground pointer-events-none flex aspect-square h-5 items-center justify-center gap-1 rounded px-1 font-sans text-[0.7rem] font-medium select-none"
+                        >K</kbd
+                    >
+                </div>
+            </ai-button>
+        </div>
         } @if (config?.github) {
         <ai-separator orientation="vertical" class="hidden h-4 sm:block" />
         <a ai-button variant="ghost" size="xs" [href]="config!.github" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="GitHub" icon="github"></a>
