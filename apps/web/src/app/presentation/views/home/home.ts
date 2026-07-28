@@ -1,5 +1,6 @@
-import { AiButton, AiIcon, AiIconType } from "@aiandralves/ai-ui";
+import { AiBadge, AiButton, AiIcon, AiIconType } from "@aiandralves/ai-ui";
 import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
+import { environment } from "@env/environment.development";
 import { DOC_PAGE_CONTEXT, DOC_SITE_CONFIG } from "@infra/tokens";
 
 import { DocFooter } from "../footer/footer";
@@ -27,16 +28,18 @@ const MARQUEE_COPIES = 4;
 
 @Component({
     selector: "doc-home",
-    imports: [AiButton, AiIcon, DocFooter],
+    imports: [AiBadge, AiButton, AiIcon, DocFooter],
     templateUrl: "./home.html",
     styleUrl: "./home.scss",
+    host: { class: "block overflow-x-hidden" },
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DocHome {
     #ctx = inject(DOC_PAGE_CONTEXT, { optional: true });
     protected config = inject(DOC_SITE_CONFIG, { optional: true }) ?? this.#ctx?.config;
 
-    protected readonly announcement = "Angular SSR + tema centralizado em componentes";
+    protected readonly version = environment.version;
+    protected readonly npmUrl = "https://www.npmjs.com/package/@aiandralves/ai-docs";
 
     protected readonly actions: HomeAction[] = [
         { label: "Começar agora", href: "/introduction", variant: "primary", icon: "rocket-2" },
