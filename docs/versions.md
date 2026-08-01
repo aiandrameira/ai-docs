@@ -8,11 +8,11 @@ order: 7
 
 ## Versões do AiDocs
 
-| Versão | Status             | Suporte até |
-| ------ | ------------------ | ----------- |
-| 0.x    | Em desenvolvimento | —           |
+| Versão              | Status                   | Suporte até |
+| ------------------- | ------------------------ | ----------- |
+| {{AI_DOCS_VERSION}} | Atual — publicada no npm | —           |
 
-O AiDocs ainda está em desenvolvimento ativo. A API pública pode mudar entre versões `0.x`. A partir da `1.0.0`, o projeto adotará [Semantic Versioning](https://semver.org/lang/pt-BR/).
+A versão `{{AI_DOCS_VERSION}}` está disponível publicamente como [`@aiandralves/ai-docs`](https://www.npmjs.com/package/@aiandralves/ai-docs). O AiDocs continua em desenvolvimento ativo e a API pública pode mudar entre versões `0.x`. A partir da `1.0.0`, o projeto adotará [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
 ## Node.js
 
@@ -27,7 +27,7 @@ Recomendamos sempre usar a versão LTS mais recente do Node.js.
 
 ## Angular
 
-O AiDocs usa Angular internamente para renderizar o tema via SSR. Você **não precisa** ter Angular no seu projeto — o motor de renderização já vem embutido e pré-buildado dentro do pacote `@aiandrameira/ai-docs`; o resultado final (`ai-docs build`) é sempre HTML estático puro.
+O AiDocs usa Angular internamente para renderizar o tema via SSR. Você **não precisa** ter Angular no seu projeto — o motor de renderização já vem embutido e pré-buildado dentro do pacote `@aiandralves/ai-docs`; o resultado final (`ai-docs build`) é sempre HTML estático puro.
 
 | Angular | Versão do AiDocs |
 | ------- | ---------------- |

@@ -16,12 +16,17 @@ export interface AssetManifest {
     preloadFiles: string[];
 }
 
+// `no-flash` hides <body> until Angular's afterNextRender removes it (see shell.ts) to
+// avoid a dark-mode flash. If the client bundle is slow, blocked, or errors out on a given
+// device, that removal never happens — so this also force-reveals the page after a short
+// timeout, trading a possible flash for never leaving the user stuck on a blank/black screen.
 const DARK_MODE_SCRIPT = `<script>
 (function(){
     document.documentElement.classList.add('no-flash');
     var t=localStorage.getItem('theme');
     var d=window.matchMedia('(prefers-color-scheme: dark)').matches;
     if(t==='dark'||(t===null&&d)){document.documentElement.classList.add('dark');}
+    setTimeout(function(){document.documentElement.classList.remove('no-flash');}, 2500);
 })();
 </script>
 <style>html.no-flash body{visibility:hidden;}</style>`;
@@ -56,7 +61,12 @@ function buildBaseTemplate(): string {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
-        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..800&family=Montserrat:wght@100..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet" />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..800&family=Montserrat:wght@100..900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+            media="print"
+            onload="this.media='all'"
+        />
         ${DARK_MODE_SCRIPT}
     </head>
     <body>

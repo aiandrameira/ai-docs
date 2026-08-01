@@ -13,7 +13,8 @@ Este guia cobre o fluxo completo: criar a configuração, escrever páginas, vis
 Em um projeto TypeScript existente, rode:
 
 ```bash
-npx @aiandrameira/ai-docs init
+npx @aiandralves/ai-docs init
+npx ai-docs init
 ```
 
 Isso cria:
@@ -26,12 +27,22 @@ Isso cria:
 Abra `ai-docs.config.ts` e ajuste:
 
 ```ts
+import { defineConfig } from "@aiandralves/ai-docs/config";
+
 export default defineConfig({
-    title: "Minha Lib",
-    description: "Documentação da minha biblioteca TypeScript.",
+    title: "Minha biblioteca",
+    description: "Documentação oficial da minha biblioteca.",
     docs: "./docs",
     output: "./dist/docs",
     base: "/",
+    logo: "/assets/logo.svg",
+    github: "https://github.com/usuario/projeto",
+    features: {
+        search: true,
+        darkMode: true,
+        copyCode: true,
+        mermaid: true,
+    },
 });
 ```
 

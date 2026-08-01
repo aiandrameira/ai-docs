@@ -11,7 +11,7 @@ Toda a configuração do AiDocs fica em `ai-docs.config.ts` na raiz do projeto.
 ## Estrutura básica
 
 ```ts
-import { defineConfig } from "@aiandrameira/ai-docs/config";
+import { defineConfig } from "@aiandralves/ai-docs/config";
 
 export default defineConfig({
     title: "Minha Documentação",
@@ -24,7 +24,7 @@ export default defineConfig({
 
 ## Opções
 
-### `title` — obrigatório
+### Title `(title)` — obrigatório
 
 Nome do site, exibido no header e nas meta tags.
 
@@ -32,7 +32,7 @@ Nome do site, exibido no header e nas meta tags.
 title: "AiDocs";
 ```
 
-### `description`
+### Description `(description)`
 
 Descrição padrão para SEO e Open Graph.
 
@@ -40,7 +40,7 @@ Descrição padrão para SEO e Open Graph.
 description: "Gerador de documentação estática.";
 ```
 
-### `docs`
+### Docs `(docs)` — obrigatório
 
 Caminho para a pasta com os arquivos Markdown. Padrão: `./docs`.
 
@@ -48,7 +48,7 @@ Caminho para a pasta com os arquivos Markdown. Padrão: `./docs`.
 docs: "./docs";
 ```
 
-### `output`
+### Output `(output)`
 
 Pasta de saída do build. Padrão: `./dist/docs`.
 
@@ -56,7 +56,7 @@ Pasta de saída do build. Padrão: `./dist/docs`.
 output: "./dist/docs";
 ```
 
-### `base`
+### Base `(base)`
 
 URL base do site. Útil para deploys em subpaths (ex: GitHub Pages em `/meu-repo/`).
 
@@ -64,7 +64,7 @@ URL base do site. Útil para deploys em subpaths (ex: GitHub Pages em `/meu-repo
 base: "/meu-repo/";
 ```
 
-### `logo`
+### Logo `(logo)`
 
 Caminho para a imagem de logo exibida no header. Se omitido, exibe um ícone genérico com o `title`.
 
@@ -72,7 +72,7 @@ Caminho para a imagem de logo exibida no header. Se omitido, exibe um ícone gen
 logo: "/assets/logo.svg";
 ```
 
-### `favicon`
+### Favicon `(favicon)`
 
 Caminho para o favicon do site.
 
@@ -80,7 +80,7 @@ Caminho para o favicon do site.
 favicon: "/assets/favicon.ico";
 ```
 
-### `github`
+### GitHub `(github)`
 
 URL do repositório no GitHub. Se definido, exibe um ícone de GitHub no header, ao lado do alternador de tema.
 
@@ -88,7 +88,7 @@ URL do repositório no GitHub. Se definido, exibe um ícone de GitHub no header,
 github: "https://github.com/usuario/repo";
 ```
 
-### `nav`
+### Navigation `(nav)`
 
 Links exibidos no header, ao lado do botão de busca.
 
@@ -99,31 +99,31 @@ nav: [
 ];
 ```
 
-### `features`
+### Features `(features)`
 
 Habilita ou desabilita funcionalidades:
 
 ```ts
 features: {
-  search: true,       // paleta de busca ⌘K
-  darkMode: true,     // alternador de tema claro/escuro
-  copyCode: true,     // botão de copiar em blocos de código
-  mermaid: true,      // renderização de diagramas Mermaid
-  editOnGitHub: {     // link "Editar no GitHub" no rodapé de cada página
-    repo: 'https://github.com/usuario/repo',
-    branch: 'main',
-    docsDir: 'docs',
-  },
+    search: true,       // paleta de busca ⌘K
+    darkMode: true,     // alternador de tema claro/escuro
+    copyCode: true,     // botão de copiar em blocos de código
+    mermaid: true,      // renderização de diagramas Mermaid
+    editOnGitHub: {     // link "Editar no GitHub" no rodapé de cada página
+        repo: "https://github.com/usuario/repo",
+        branch: "main",
+        docsDir: "docs",
+    },
 }
 ```
 
-### `theme`
+### Theme `(theme)`
 
 Personalizações visuais:
 
 ```ts
 theme: {
-  customCss: '/assets/custom.css',  // CSS extra injetado após o tema padrão
+    customCss: "/assets/custom.css",  // CSS extra injetado após o tema padrão
 }
 ```
 
