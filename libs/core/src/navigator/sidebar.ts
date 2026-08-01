@@ -1,60 +1,64 @@
-import * as path from "path";
-
 import type { DocPage, SidebarItem } from "../types";
 
 export function buildSidebar(pages: DocPage[], currentSlug?: string): SidebarItem[] {
-    const grouped = groupByDirectory(pages);
-    return buildTree(grouped, currentSlug);
-}
-
-interface GroupedPages {
-    [dir: string]: DocPage[];
-}
-
-function groupByDirectory(pages: DocPage[]): GroupedPages {
-    const groups: GroupedPages = { "": [] };
+    const root = makeSidebarNode("", "");
 
     for (const page of pages) {
         if (page.frontMatter.sidebar === false) continue;
 
-        const dir = path.dirname(page.slug);
-        const normalizedDir = dir === "." ? "" : dir;
+        if (!page.slug) {
+            root.page = page;
+            continue;
+        }
 
-        if (!groups[normalizedDir]) groups[normalizedDir] = [];
-        groups[normalizedDir].push(page);
+        let node = root;
+        for (const segment of page.slug.split("/")) {
+            const nodePath = node.path ? `${node.path}/${segment}` : segment;
+            let child = node.children.get(segment);
+
+            if (!child) {
+                child = makeSidebarNode(segment, nodePath);
+                node.children.set(segment, child);
+            }
+
+            node = child;
+        }
+
+        node.page = page;
     }
 
-    return groups;
+    const items = [...root.children.values()].map(node => nodeToItem(node, currentSlug));
+    if (root.page) items.push(pageToItem(root.page, currentSlug));
+
+    return sortItems(items);
 }
 
-function buildTree(groups: GroupedPages, currentSlug?: string): SidebarItem[] {
-    const roots: SidebarItem[] = [];
+interface SidebarNode {
+    segment: string;
+    path: string;
+    page?: DocPage;
+    children: Map<string, SidebarNode>;
+}
 
-    for (const [dir, pages] of Object.entries(groups)) {
-        if (dir === "") {
-            const sorted = sortPages(pages);
-            roots.push(...sorted.map(page => pageToItem(page, currentSlug)));
-        } else {
-            const indexPage = pages.find(p => p.slug === dir);
-            const children = sortPages(pages.filter(p => p.slug !== dir)).map(page => pageToItem(page, currentSlug));
+function makeSidebarNode(segment: string, nodePath: string): SidebarNode {
+    return { segment, path: nodePath, children: new Map() };
+}
 
-            const groupOrder = indexPage?.frontMatter.order ?? Math.min(...pages.map(p => p.frontMatter.order ?? 999));
-
-            const groupTitle = indexPage?.frontMatter.title ?? dirToTitle(dir);
-            const groupHref = indexPage ? `/${dir}` : `/${dir}`;
-            const isGroupActive = currentSlug?.startsWith(dir);
-
-            roots.push({
-                title: groupTitle,
-                href: groupHref,
-                order: groupOrder,
-                active: isGroupActive,
-                children: children.length > 0 ? children : undefined,
-            });
-        }
+function nodeToItem(node: SidebarNode, currentSlug?: string): SidebarItem {
+    if (node.children.size === 0 && node.page) {
+        return pageToItem(node.page, currentSlug);
     }
 
-    return roots.sort((a, b) => a.order - b.order);
+    const children = sortItems([...node.children.values()].map(child => nodeToItem(child, currentSlug)));
+    const descendantOrder = children.length > 0 ? Math.min(...children.map(child => child.order)) : 999;
+
+    return {
+        title: node.page?.frontMatter.title ?? dirToTitle(node.segment),
+        href: `/${node.path}`,
+        order: node.page?.frontMatter.order ?? descendantOrder,
+        active: currentSlug === node.path || currentSlug?.startsWith(`${node.path}/`),
+        children,
+    };
 }
 
 function pageToItem(page: DocPage, currentSlug?: string): SidebarItem {
@@ -66,18 +70,12 @@ function pageToItem(page: DocPage, currentSlug?: string): SidebarItem {
     };
 }
 
-function sortPages(pages: DocPage[]): DocPage[] {
-    return [...pages].sort((a, b) => {
-        const orderA = a.frontMatter.order ?? 999;
-        const orderB = b.frontMatter.order ?? 999;
-        if (orderA !== orderB) return orderA - orderB;
-        return (a.frontMatter.title ?? a.slug).localeCompare(b.frontMatter.title ?? b.slug);
-    });
+function sortItems(items: SidebarItem[]): SidebarItem[] {
+    return items.sort((a, b) => (a.order !== b.order ? a.order - b.order : a.title.localeCompare(b.title)));
 }
 
-function dirToTitle(dir: string): string {
-    const last = dir.split("/").pop() ?? dir;
-    return last.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+function dirToTitle(segment: string): string {
+    return segment.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase());
 }
 
 export function resolvePrevNext(pages: DocPage[], currentSlug: string): { prev?: DocPage; next?: DocPage } {
