@@ -1,6 +1,5 @@
 import { AiBadge, AiButton, AiIcon, AiIconType } from "@aiandralves/ai-ui";
 import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
-import { environment } from "@env/environment.development";
 import { DOC_PAGE_CONTEXT, DOC_SITE_CONFIG } from "@infra/tokens";
 
 import { DocFooter } from "../footer/footer";
@@ -38,7 +37,7 @@ export class DocHome {
     #ctx = inject(DOC_PAGE_CONTEXT, { optional: true });
     protected config = inject(DOC_SITE_CONFIG, { optional: true }) ?? this.#ctx?.config;
 
-    protected readonly version = environment.version;
+    protected readonly version = this.#ctx?.variables["AI_DOCS_VERSION"] ?? "0.0.0";
     protected readonly npmUrl = "https://www.npmjs.com/package/@aiandralves/ai-docs";
 
     protected readonly actions: HomeAction[] = [

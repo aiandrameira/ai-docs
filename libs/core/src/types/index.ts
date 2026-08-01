@@ -96,6 +96,7 @@ export interface PageContext {
     sidebar: SidebarItem[];
     toc: TocItem[];
     breadcrumb: BreadcrumbItem[];
+    variables: Readonly<Record<string, string>>;
     prev?: SidebarItem;
     next?: SidebarItem;
     config: SiteConfig;

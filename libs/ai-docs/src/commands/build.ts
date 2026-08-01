@@ -47,11 +47,12 @@ export async function runBuild(config: SiteConfig, opts: { quiet?: boolean } = {
         return;
     }
 
+    const variables = { AI_DOCS_VERSION: loadPackageInfo().version };
     const parserOpts = {
         shiki: config.features?.copyCode !== false,
         mermaid: config.features?.mermaid === true,
         codeTheme: config.theme?.codeTheme,
-        variables: { AI_DOCS_VERSION: loadPackageInfo().version },
+        variables,
     };
 
     let pages: DocPage[] = (
@@ -87,6 +88,7 @@ export async function runBuild(config: SiteConfig, opts: { quiet?: boolean } = {
             sidebar: buildSidebar(pages, page.slug),
             toc,
             breadcrumb,
+            variables,
             prev: prev
                 ? {
                       title: prev.frontMatter.title ?? prev.slug,
