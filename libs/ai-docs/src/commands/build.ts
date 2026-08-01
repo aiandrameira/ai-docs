@@ -6,6 +6,7 @@ import { buildBreadcrumb, buildSearchIndex, buildSidebar, extractToc, parseFileA
 
 import { copyAngularAssets, copyBundledTheme, copyDocsAssets, copyMermaidAsset } from "../assets/copier";
 import { logger } from "../config/logger";
+import { loadPackageInfo } from "../config/package-info";
 import { spinner } from "../config/spinner";
 
 import type { DocPage, PageContext, SiteConfig } from "@aiandrameira/core";
@@ -50,6 +51,7 @@ export async function runBuild(config: SiteConfig, opts: { quiet?: boolean } = {
         shiki: config.features?.copyCode !== false,
         mermaid: config.features?.mermaid === true,
         codeTheme: config.theme?.codeTheme,
+        variables: { AI_DOCS_VERSION: loadPackageInfo().version },
     };
 
     let pages: DocPage[] = (

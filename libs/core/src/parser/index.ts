@@ -14,6 +14,7 @@ export interface ParserOptions {
     shiki?: boolean;
     mermaid?: boolean;
     codeTheme?: SiteConfig["theme"] extends infer T ? (T extends { codeTheme?: infer C } ? C : undefined) : undefined;
+    variables?: Readonly<Record<string, string>>;
 }
 
 export function createParser(): MarkdownIt {
@@ -52,24 +53,30 @@ export async function createAsyncParser(opts: ParserOptions = {}): Promise<Markd
     return md;
 }
 
-export function parseFile(filePath: string, rawContent: string, docsRoot: string): DocPage {
-    const { data, content } = matter(rawContent);
+export function parseFile(filePath: string, rawContent: string, docsRoot: string, opts: ParserOptions = {}): DocPage {
+    const interpolatedContent = interpolateVariables(rawContent, opts.variables);
+    const { data, content } = matter(interpolatedContent);
     const frontMatter = data as FrontMatter;
 
     const md = createParser();
     const html = md.render(content);
 
-    return makeDocPage(filePath, rawContent, frontMatter, html, docsRoot);
+    return makeDocPage(filePath, interpolatedContent, frontMatter, html, docsRoot);
 }
 
 export async function parseFileAsync(filePath: string, rawContent: string, docsRoot: string, opts: ParserOptions = {}): Promise<DocPage> {
-    const { data, content } = matter(rawContent);
+    const interpolatedContent = interpolateVariables(rawContent, opts.variables);
+    const { data, content } = matter(interpolatedContent);
     const frontMatter = data as FrontMatter;
 
     const md = await createAsyncParser(opts);
     const html = md.render(content);
 
-    return makeDocPage(filePath, rawContent, frontMatter, html, docsRoot);
+    return makeDocPage(filePath, interpolatedContent, frontMatter, html, docsRoot);
+}
+
+export function interpolateVariables(content: string, variables: Readonly<Record<string, string>> = {}): string {
+    return content.replace(/\{\{([A-Z][A-Z0-9_]*)\}\}/g, (placeholder, name: string) => variables[name] ?? placeholder);
 }
 
 function makeDocPage(filePath: string, rawContent: string, frontMatter: FrontMatter, html: string, docsRoot: string): DocPage {

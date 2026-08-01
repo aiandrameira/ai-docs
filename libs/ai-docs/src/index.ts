@@ -1,20 +1,13 @@
 #!/usr/bin/env node
 import { Command } from "commander";
-import { readFileSync } from "fs";
-import { resolve } from "path";
 
 import { runBuild } from "./commands/build";
 import { runDev } from "./commands/dev";
 import { runInit } from "./commands/init";
 import { logger } from "./config/logger";
+import { loadPackageInfo } from "./config/package-info";
 
-let pkg: { version: string } = { version: "0.0.0" };
-
-try {
-    pkg = JSON.parse(readFileSync(resolve(__dirname, "./package.json"), "utf-8")) as { version: string };
-} catch {
-    /* ignore — version stays 0.0.0 */
-}
+const pkg = loadPackageInfo();
 
 async function runAction(action: () => Promise<void>): Promise<void> {
     try {
