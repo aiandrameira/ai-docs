@@ -3,7 +3,7 @@ import * as path from "path";
 
 import { logger } from "../config/logger";
 
-const CONFIG_TEMPLATE = `import { defineConfig } from '@aiandrameira/ai-docs/config';
+const CONFIG_TEMPLATE = `import { defineConfig } from '@aiandralves/ai-docs/config';
 
 export default defineConfig({
     title: "My Project",
