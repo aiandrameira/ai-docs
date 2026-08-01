@@ -1,3 +1,13 @@
+.home-hero {
+    padding-top: 3rem;
+}
+
+@media (min-width: 40rem) {
+    .home-hero {
+        padding-top: 4rem;
+    }
+}
+
 .marquee-track {
     animation: marquee 34s linear infinite;
     will-change: transform;

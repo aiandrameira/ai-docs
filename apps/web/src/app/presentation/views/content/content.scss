@@ -43,6 +43,9 @@ doc-content {
 
     p {
         @apply text-sm text-muted-foreground font-text font-semibold mb-4 leading-relaxed text-justify;
+        strong {
+            @apply font-bold font-text text-sm text-primary;
+        }
     }
     em,
     p em {
