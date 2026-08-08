@@ -1,0 +1,56 @@
+@if (lightbox.open()) {
+    <div
+        class="fixed inset-0 z-100 flex items-center justify-center bg-black/85 animate-in fade-in duration-100"
+        (click)="close($event)"
+    >
+        <div #dialog class="relative w-full h-full flex items-center justify-center overflow-hidden" role="dialog" aria-label="Imagem ampliada">
+            <div class="absolute top-4 right-4 z-10 flex items-center gap-1.5">
+                <button
+                    type="button"
+                    class="flex items-center justify-center w-9 h-9 rounded-md border border-white/20 bg-black/40 text-white cursor-pointer transition-colors duration-200 hover:bg-black/60 disabled:opacity-40 disabled:cursor-not-allowed"
+                    [disabled]="zoom() <= 1"
+                    (click)="zoomOut()"
+                    aria-label="Diminuir zoom"
+                >
+                    <ai-icon icon="zoom-out" size="sm" />
+                </button>
+                <button
+                    type="button"
+                    class="flex items-center justify-center w-9 h-9 rounded-md border border-white/20 bg-black/40 text-white cursor-pointer transition-colors duration-200 hover:bg-black/60 disabled:opacity-40 disabled:cursor-not-allowed"
+                    [disabled]="zoom() >= 5"
+                    (click)="zoomIn()"
+                    aria-label="Aumentar zoom"
+                >
+                    <ai-icon icon="zoom-in" size="sm" />
+                </button>
+                <button
+                    type="button"
+                    class="flex items-center justify-center w-9 h-9 rounded-md border border-white/20 bg-black/40 text-white cursor-pointer transition-colors duration-200 hover:bg-black/60"
+                    (click)="close()"
+                    aria-label="Fechar"
+                >
+                    <ai-icon icon="close" size="sm" />
+                </button>
+            </div>
+
+            <img
+                [src]="lightbox.src()"
+                [alt]="lightbox.alt()"
+                (wheel)="onWheel($event)"
+                (pointerdown)="onPointerDown($event)"
+                (pointermove)="onPointerMove($event)"
+                (pointerup)="onPointerUp()"
+                (pointercancel)="onPointerUp()"
+                [style.transform]="'translate(' + translate().x + 'px,' + translate().y + 'px) scale(' + zoom() + ')'"
+                [class.cursor-grab]="zoom() > 1"
+                class="max-w-[92vw] max-h-[92vh] select-none rounded-lg shadow-2xl transition-transform duration-100 touch-none"
+            />
+
+            @if (lightbox.alt()) {
+                <p class="absolute bottom-4 left-1/2 -translate-x-1/2 text-xs text-white/70 px-3 py-1 bg-black/40 rounded-full max-w-[80vw] truncate">
+                    {{ lightbox.alt() }}
+                </p>
+            }
+        </div>
+    </div>
+}
