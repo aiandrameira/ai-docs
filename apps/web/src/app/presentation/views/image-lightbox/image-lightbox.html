@@ -36,6 +36,8 @@
             <img
                 [src]="lightbox.src()"
                 [alt]="lightbox.alt()"
+                draggable="false"
+                (dragstart)="$event.preventDefault()"
                 (wheel)="onWheel($event)"
                 (pointerdown)="onPointerDown($event)"
                 (pointermove)="onPointerMove($event)"

@@ -44,6 +44,7 @@ export class DocImageLightbox {
 
     protected onPointerDown(event: PointerEvent): void {
         if (this.zoom() === ZOOM_MIN) return;
+        event.preventDefault();
         this.#dragging = true;
         this.#dragStart = { x: event.clientX, y: event.clientY };
         this.#translateStart = this.translate();
