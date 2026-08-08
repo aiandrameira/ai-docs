@@ -7,6 +7,7 @@ import { DocBreadcrumb } from "../breadcrumb/breadcrumb";
 import { DocContent } from "../content/content";
 import { DocHeader } from "../header/header";
 import { DocHome } from "../home/home";
+import { DocImageLightbox } from "../image-lightbox/image-lightbox";
 import { DocMobileMenu } from "../mobile-menu/mobile-menu";
 import { DocPageProgress } from "../page-progress/page-progress";
 import { DocPrevNext } from "../prev-next/prev-next";
@@ -16,7 +17,19 @@ import { DocToc } from "../toc/toc";
 
 @Component({
     selector: "doc-shell",
-    imports: [DocHeader, DocSidebar, DocMobileMenu, DocContent, DocToc, DocBreadcrumb, DocPrevNext, DocSearch, DocHome, DocPageProgress],
+    imports: [
+        DocHeader,
+        DocSidebar,
+        DocMobileMenu,
+        DocContent,
+        DocToc,
+        DocBreadcrumb,
+        DocPrevNext,
+        DocSearch,
+        DocHome,
+        DocPageProgress,
+        DocImageLightbox,
+    ],
     templateUrl: "./shell.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
