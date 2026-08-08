@@ -2,7 +2,7 @@ import { AiButton } from "@aiandralves/ai-ui";
 import { DOCUMENT } from "@angular/common";
 import { afterNextRender, ChangeDetectionStrategy, Component, inject, OnDestroy, ViewEncapsulation } from "@angular/core";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
-import { CopierMountService, MermaidRenderService } from "@infra/services";
+import { CopierMountService, ImageZoomMountService, MermaidRenderService } from "@infra/services";
 import { DOC_PAGE_CONTEXT, DOC_SITE_CONFIG } from "@infra/tokens";
 
 @Component({
@@ -19,12 +19,14 @@ export class DocContent implements OnDestroy {
     #sanitizer = inject(DomSanitizer);
     #copierMount = inject(CopierMountService);
     #mermaidRender = inject(MermaidRenderService);
+    #imageZoomMount = inject(ImageZoomMountService);
 
     constructor() {
         const doc = inject(DOCUMENT);
         afterNextRender(() => {
             this.#mermaidRender.renderAll(doc);
             this.#copierMount.mountAll(doc);
+            this.#imageZoomMount.mountAll(doc);
         });
     }
 

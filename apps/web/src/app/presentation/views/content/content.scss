@@ -133,6 +133,13 @@ doc-content {
     img {
         @apply max-w-full rounded-lg;
     }
+
+    .zoomable-image {
+        @apply cursor-zoom-in transition-[filter] duration-150;
+        &:hover {
+            @apply brightness-95;
+        }
+    }
     hr {
         @apply border-0 border-t border-border my-8;
     }
@@ -168,6 +175,9 @@ doc-content {
         p {
             @apply m-0 text-xs;
         }
+        code {
+            @apply font-code font-semibold text-[0.85em] rounded px-1 py-0.5 bg-transparent;
+        }
     }
 
     .callout-primary {
@@ -176,6 +186,9 @@ doc-content {
         .callout-body strong,
         .callout-body p {
             @apply text-primary;
+        }
+        .callout-body code {
+            @apply text-primary bg-primary/12;
         }
     }
 
@@ -186,6 +199,9 @@ doc-content {
         .callout-body p {
             @apply text-info;
         }
+        .callout-body code {
+            @apply text-info bg-info/12;
+        }
     }
 
     .callout-success {
@@ -194,6 +210,9 @@ doc-content {
         .callout-body strong,
         .callout-body p {
             @apply text-success;
+        }
+        .callout-body code {
+            @apply text-success bg-success/12;
         }
     }
 
@@ -204,6 +223,9 @@ doc-content {
         .callout-body p {
             @apply text-warning;
         }
+        .callout-body code {
+            @apply text-warning bg-warning/12;
+        }
     }
 
     .callout-destructive {
@@ -212,6 +234,9 @@ doc-content {
         .callout-body strong,
         .callout-body p {
             @apply text-destructive;
+        }
+        .callout-body code {
+            @apply text-destructive bg-destructive/12;
         }
     }
 
