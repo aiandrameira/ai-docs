@@ -169,7 +169,7 @@ doc-content {
         @apply text-base shrink-0 font-normal;
     }
     .callout-body {
-        strong {
+        > strong {
             @apply block font-text text-sm font-semibold mb-1;
         }
         p {
